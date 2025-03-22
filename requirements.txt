@@ -1,0 +1,6 @@
+llama-cpp-python (for Llama 3.x model)
+Flask (for creating a simple API/interface)
+PyPDF2 (for parsing resumes)
+langchain (for building the agents)
+google-auth, google-auth-oauthlib (for Calendar integration simulation)
+nltk (for sentiment analysis)
