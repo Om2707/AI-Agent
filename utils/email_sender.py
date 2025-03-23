@@ -142,3 +142,31 @@ class EmailSender:
             return [email for email in self.email_history 
                    if email["recipient"]["email"] == recipient_email]
         return self.email_history
+
+# Create a default instance of EmailSender for the standalone function to use
+_default_sender = EmailSender()
+
+# Add a standalone function to allow direct imports of send_email
+def send_email(recipient_email: str, subject: str, body: str, 
+               recipient_name: Optional[str] = None, 
+               attachments: Optional[List[Dict[str, Any]]] = None) -> str:
+    """
+    Standalone function to send an email using the default EmailSender instance
+    
+    Args:
+        recipient_email: Recipient's email address
+        subject: Email subject line
+        body: Email body content (HTML supported)
+        recipient_name: Recipient's name (optional)
+        attachments: List of attachment objects (optional)
+        
+    Returns:
+        Email ID for tracking
+    """
+    return _default_sender.send_email(
+        recipient_email=recipient_email,
+        subject=subject,
+        body=body,
+        recipient_name=recipient_name,
+        attachments=attachments
+    )

@@ -1,6 +1,33 @@
-llama-cpp-python (for Llama 3.x model)
-Flask (for creating a simple API/interface)
-PyPDF2 (for parsing resumes)
-langchain (for building the agents)
-google-auth, google-auth-oauthlib (for Calendar integration simulation)
-nltk (for sentiment analysis)
+# Core dependencies
+numpy==1.24.3
+pandas==2.0.3
+torch==2.1.0
+transformers==4.35.0
+sentencepiece==0.1.99
+accelerate==0.23.0
+
+# LLM specific
+llama-cpp-python==0.2.11
+huggingface-hub==0.17.3
+
+# API and integration
+fastapi==0.103.1
+uvicorn==0.23.2
+pydantic==2.4.2
+python-dotenv==1.0.0
+
+# Document processing
+pypdf==3.16.2
+docx2txt==0.8
+nltk==3.8.1
+scikit-learn==1.3.0
+
+# Calendar and email
+google-api-python-client==2.108.0
+google-auth-oauthlib==1.1.0
+email-validator==2.0.0
+
+# Utilities
+tqdm==4.66.1
+pytest==7.4.2
+python-multipart==0.0.6

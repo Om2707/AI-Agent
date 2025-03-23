@@ -1,0 +1,16 @@
+2025-03-23 13:53:09,230 - __main__ - ERROR - Failed to import necessary modules: No module named 'llama_cpp'
+2025-03-23 13:53:09,230 - __main__ - INFO - Make sure you've installed all dependencies from requirements.txt
+2025-03-23 13:56:13,083 - __main__ - ERROR - Failed to import necessary modules: No module named 'llama_cpp'
+2025-03-23 13:56:13,084 - __main__ - INFO - Make sure you've installed all dependencies from requirements.txt
+2025-03-23 13:59:22,428 - __main__ - ERROR - Failed to import necessary modules: cannot import name 'extract_text_from_pdf' from 'utils.pdf_parser' (C:\Users\tagal\Desktop\AI Agent\utils\pdf_parser.py)
+2025-03-23 13:59:22,428 - __main__ - INFO - Make sure you've installed all dependencies from requirements.txt
+2025-03-23 14:02:56,352 - __main__ - ERROR - Failed to import necessary modules: cannot import name 'extract_text_from_pdf' from 'utils.pdf_parser' (C:\Users\tagal\Desktop\AI Agent\utils\pdf_parser.py)
+2025-03-23 14:02:56,353 - __main__ - INFO - Make sure you've installed all dependencies from requirements.txt
+2025-03-23 14:06:34,857 - __main__ - ERROR - Failed to import necessary modules: cannot import name 'extract_text_from_pdf' from 'utils.pdf_parser' (C:\Users\tagal\Desktop\AI Agent\utils\pdf_parser.py)
+2025-03-23 14:06:34,857 - __main__ - INFO - Make sure you've installed all dependencies from requirements.txt
+2025-03-23 14:13:56,691 - __main__ - ERROR - Failed to import necessary modules: cannot import name 'extract_text_from_pdf' from 'utils.pdf_parser' (C:\Users\tagal\Desktop\AI Agent\utils\pdf_parser.py)
+2025-03-23 14:13:56,691 - __main__ - INFO - Make sure you've installed all dependencies from requirements.txt
+2025-03-23 14:15:03,957 - __main__ - ERROR - Failed to import necessary modules: cannot import name 'extract_text_from_pdf' from 'utils.pdf_parser' (C:\Users\tagal\Desktop\AI Agent\utils\pdf_parser.py)
+2025-03-23 14:15:03,957 - __main__ - INFO - Make sure you've installed all dependencies from requirements.txt
+2025-03-23 14:21:06,307 - __main__ - ERROR - Failed to import necessary modules: cannot import name 'send_email' from 'utils.email_sender' (C:\Users\tagal\Desktop\AI Agent\utils\email_sender.py)
+2025-03-23 14:21:06,308 - __main__ - INFO - Make sure you've installed all dependencies from requirements.txt

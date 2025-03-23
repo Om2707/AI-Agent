@@ -183,3 +183,16 @@ class PDFParser:
                 parsed_jds.append(parsed_jd)
         
         return parsed_jds
+
+# Add a standalone function to allow direct imports of extract_text_from_pdf
+def extract_text_from_pdf(pdf_path: str) -> str:
+    """
+    Standalone function that calls PDFParser.extract_text_from_pdf
+    
+    Args:
+        pdf_path: Path to the PDF file
+        
+    Returns:
+        Extracted text content
+    """
+    return PDFParser.extract_text_from_pdf(pdf_path)
