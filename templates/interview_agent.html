@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Agent - Llama Agentic AI Recruitment App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Llama Agentic AI Recruitment</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">JD Generator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Resume Ranker</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Email Automation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Interview Scheduler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Interview Agent</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Hire Recommendation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Sentiment Analyzer</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                <h1>Interactive AI Interview Agent</h1>
+                <p class="lead">Conduct AI-driven interviews that adapt dynamically based on candidate responses.</p>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card mb-4 h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Interview Setup</h5>
+                        <form id="interviewSetupForm">
+                            <div class="mb-3">
+                                <label for="candidateSelect" class="form-label">Select Candidate</label>
+                                <select class="form-select" id="candidateSelect" required>
+                                    <option value="" selected disabled>Choose a candidate...</option>
+                                    <option value="1">John Doe - Software Engineer</option>
+                                    <option value="2">Jane Smith - Product Manager</option>
+                                    <option value="3">Michael Johnson - UX Designer</option>
+                                    <option value="4">Emily Brown - Data Scientist</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="positionSelect" class="form-label">Position</label>
+                                <select class="form-select" id="positionSelect" required>
+                                    <option value="" selected disabled>Select position...</option>
+                                    <option value="swe">Software Engineer</option>
+                                    <option value="pm">Product Manager</option>
+                                    <option value="uxd">UX Designer</option>
+                                    <option value="ds">Data Scientist</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="interviewType" class="form-label">Interview Type</label>
+                                <select class="form-select" id="interviewType" required>
+                                    <option value="technical">Technical Interview</option>
+                                    <option value="behavioral">Behavioral Interview</option>
+                                    <option value="cultural">Cultural Fit Interview</option>
+                                    <option value="mixed" selected>Mixed (Recommended)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="experienceLevel" class="form-label">Experience Level</label>
+                                <select class="form-select" id="experienceLevel" required>
+                                    <option value="junior">Junior (0-2 years)</option>
+                                    <option value="mid" selected>Mid-level (3-5 years)</option>
+                                    <option value="senior">Senior (6+ years)</option>
+                                    <option value="lead">Team Lead/Manager</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="duration" class="form-label">Interview Duration</label>
+                                <select class="form-select" id="duration" required>
+                                    <option value="15">15 minutes (Quick screen)</option>
+                                    <option value="30" selected>30 minutes (Standard)</option>
+                                    <option value="45">45 minutes (Extended)</option>
+                                    <option value="60">60 minutes (In-depth)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="adaptiveMode" checked>
+                                <label class="form-check-label" for="adaptiveMode">Adaptive Mode (Dynamically adjusts questions based on responses)</label>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="focusAreas" class="form-label">Focus Areas (Optional)</label>
+                                <input type="text" class="form-control" id="focusAreas" placeholder="e.g., React, System Design, Leadership">
+                            </div>
+                            
+                            <button type="button" id="startInterviewBtn" class="btn btn-primary w-100">Start Interview</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-8">
+                <div class="card mb-4" id="interviewCard" style="display: none;">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="badge bg-primary me-2">Live Interview</span>
+                            <span id="candidateName">John Doe</span> - <span id="positionName">Software Engineer</span>
+                        </div>
+                        <div>
+                            <span id="timer" class="badge bg-secondary">00:00</span>
+                            <button id="endInterviewBtn" class="btn btn-sm btn-outline-danger ms-2">End Interview</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="interviewChat" class="interview-chat mb-3" style="height: 400px; overflow-y: auto; border: 1px solid #dee2e6; border-radius: 0.25rem; padding: 1rem;">
+                            <div class="d-flex mb-3">
+                                <div class="flex-shrink-0">
+                                    <img src="/api/placeholder/40/40" alt="AI" class="rounded-circle" width="40" height="40">
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <p class="mb-0"><strong>Llama Interview Agent:</strong> Hello John, I'm your AI interviewer for today. I'll be asking you some questions about your experience with software engineering. Let's start with a simple introduction. Could you tell me a bit about your background and experience?</p>
+                                </div>
+                            </div>
+                            <!-- More chat messages will be added dynamically -->
+                        </div>
+                        
+                        <form id="candidateResponseForm">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Candidate response:</span>
+                                <textarea id="candidateResponse" class="form-control" rows="2" placeholder="Type or paste candidate's response here..."></textarea>
+                                <button class="btn btn-primary" type="button" id="submitResponseBtn">Submit</button>
+                            </div>
+                        </form>
+                        
+                        <div class="interview-controls text-center">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-outline-secondary btn-sm" id="easierBtn">Make Questions Easier</button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm" id="harderBtn">Make Questions Harder</button>
+                            </div>
+                            <div class="btn-group ms-2" role="group">
+                                <button type="button" class="btn btn-outline-info btn-sm" id="technicalBtn">Focus on Technical</button>
+                                <button type="button" class="btn btn-outline-info btn-sm" id="behavioralBtn">Focus on Behavioral</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="recordInterview" checked>
+                                <label class="form-check-label" for="recordInterview">Record Interview</label>
+                            </div>
+                            <div>
+                                <button id="pauseBtn" class="btn btn-sm btn-outline-secondary me-2">Pause</button>
+                                <button id="completeBtn" class="btn btn-sm btn-success">Complete Interview</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mb-4" id="interviewListCard">
+                    <div class="card-header">
+                        Recent Interviews
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Candidate</th>
+                                        <th>Position</th>
+                                        <th>Date</th>
+                                        <th>Duration</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Emily Brown</td>
+                                        <td>Data Scientist</td>
+                                        <td>Mar 23, 2025</td>
+                                        <td>32 min</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary">View</button>
+                                            <button class="btn btn-sm btn-outline-success">Analysis</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Michael Johnson</td>
+                                        <td>UX Designer</td>
+                                        <td>Mar 22, 2025</td>
+                                        <td>28 min</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary">View</button>
+                                            <button class="btn btn-sm btn-outline-success">Analysis</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        AI Interview Agent Capabilities
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-repeat text-primary" viewBox="0 0 16 16">
+                                            <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                                            <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h5 class="mt-0">Adaptive Questioning</h5>
+                                        <p>Dynamically adjusts question difficulty based on candidate responses</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-layers text-primary" viewBox="0 0 16 16">
+                                            <path d="M8.235 1.559a.5.5 0 0 0-.47 0l-7.5 4a.5.5 0 0 0 0 .882L3.188 8 .264 9.559a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882L12.813 8l2.922-1.559a.5.5 0 0 0 0-.882l-7.5-4zm3.515 7.008L14.438 10 8 13.433 1.562 10 4.25 8.567l3.515 1.874a.5.5 0 0 0 .47 0l3.515-1.874zM8 9.433 1.562 6 8 2.567 14.438 6 8 9.433z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h5 class="mt-0">Multi-domain Expertise</h5>
+                                        <p>Covers technical, behavioral, and cultural fit questions</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-check text-primary" viewBox="0 0 16 16">
+                                            <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514ZM11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+                                            <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h5 class="mt-0">Candidate Assessment</h5>
+                                        <p>Real-time evaluation of candidate skills and fit</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mt-5 py-3 bg-light text-center">
+        <div class="container">
+            <p>© 2025 Llama Agentic AI Recruitment App</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Start Interview button functionality
+            document.getElementById('startInterviewBtn').addEventListener('click', function() {
+                // Hide interview list card
+                document.getElementById('interviewListCard').style.display = 'none';
+                
+                // Show interview card
+                document.getElementById('interviewCard').style.display = 'block';
+                
+                // Set candidate and position name
+                const candidateSelect = document.getElementById('candidateSelect');
+                const positionSelect = document.getElementById('positionSelect');
+                document.getElementById('candidateName').textContent = candidateSelect.options[candidateSelect.selectedIndex].text.split(' - ')[0];
+                document.getElementById('positionName').textContent = positionSelect.options[positionSelect.selectedIndex].text;
+                
+                // Start timer
+                startTimer();
+            });
+            
+            // End Interview button functionality
+            document.getElementById('endInterviewBtn').addEventListener('click', function() {
+                if (confirm('Are you sure you want to end this interview?')) {
+                    // Show interview list card
+                    document.getElementById('interviewListCard').style.display = 'block';
+                    
+                    // Hide interview card
+                    document.getElementById('interviewCard').style.display = 'none';
+                    
+                    // Reset timer
+                    stopTimer();
+                }
+            });
+            
+            // Submit Response button functionality
+            document.getElementById('submitResponseBtn').addEventListener('click', function() {
+                const responseText = document.getElementById('candidateResponse').value.trim();
+                if (responseText) {
+                    // Add candidate response to chat
+                    addChatMessage(responseText, 'Candidate');
+                    
+                    // Clear response input
+                    document.getElementById('candidateResponse').value = '';
+                    
+                    // Simulate AI thinking and response
+                    simulateAIResponse();
+                }
+            });
+            
+            // Helper function to add chat message
+            function addChatMessage(text, sender) {
+                const chatContainer = document.getElementById('interviewChat');
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'd-flex mb-3';
+                
+                let avatarSrc = '/api/placeholder/40/40';
+                let senderName = sender;
+                
+                messageDiv.innerHTML = `
+                    <div class="flex-shrink-0">
+                        <img src="${avatarSrc}" alt="${sender}" class="rounded-circle" width="40" height="40">
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <p class="mb-0"><strong>${senderName}:</strong> ${text}</p>
+                    </div>
+                `;
+                
+                chatContainer.appendChild(messageDiv);
+                
+                // Scroll to bottom
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+            
+            // Simulate AI response
+            function simulateAIResponse() {
+                // Show typing indicator
+                const chatContainer = document.getElementById('interviewChat');
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'd-flex mb-3 typing-indicator';
+                typingDiv.innerHTML = `
+                    <div class="flex-shrink-0">
+                        <img src="/api/placeholder/40/40" alt="AI" class="rounded-circle" width="40" height="40">
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <p class="mb-0"><em>Llama Interview Agent is typing...</em></p>
+                    </div>
+                `;
+                chatContainer.appendChild(typingDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                
+                // Simulate thinking time
+                setTimeout(function() {
+                    // Remove typing indicator
+                    chatContainer.removeChild(typingDiv);
+                    
+                    // Add AI response
+                    const responses = [
+                        "That's interesting. Could you elaborate more on your experience with frontend frameworks?",
+                        "Thank you for sharing that. Now, tell me about a challenging project you worked on and how you overcame obstacles.",
+                        "Great answer! Let's switch gears a bit. How do you approach debugging complex issues?",
+                        "I'd like to understand your approach to teamwork. Can you describe how you handle disagreements within your team?",
+                        "Let's dive into a technical question. How would you optimize a slow-performing database query?"
+                    ];
+                    
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    addChatMessage(randomResponse, "Llama Interview Agent");
+                }, 1500);
+            }
+            
+            // Timer functionality
+            let timerInterval;
+            let seconds = 0;
+            
+            function startTimer() {
+                seconds = 0;
+                updateTimerDisplay();
+                
+                timerInterval = setInterval(function() {
+                    seconds++;
+                    updateTimerDisplay();
+                }, 1000);
+            }
+            
+            function stopTimer() {
+                clearInterval(timerInterval);
+                seconds = 0;
+                updateTimerDisplay();
+            }
+            
+            function updateTimerDisplay() {
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = seconds % 60;
+                document.getElementById('timer').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+            }
+            
+            // Additional UI control buttons
+            document.getElementById('easierBtn').addEventListener('click', function() {
+                addSystemMessage("Questions difficulty reduced.");
+            });
+            
+            document.getElementById('harderBtn').addEventListener('click', function() {
+                addSystemMessage("Questions difficulty increased.");
+            });
+            
+            document.getElementById('technicalBtn').addEventListener('click', function() {
+                addSystemMessage("Focus shifted to technical questions.");
+            });
+            
+            document.getElementById('behavioralBtn').addEventListener('click', function() {
+                addSystemMessage("Focus shifted to behavioral questions.");
+            });
+            
+            document.getElementById('completeBtn').addEventListener('click', function() {
+                if (confirm('Are you sure you want to complete this interview?')) {
+                    addSystemMessage("Interview completed. Generating analysis...");
+                    
+                    setTimeout(function() {
+                        // Show interview list card
+                        document.getElementById('interviewListCard').style.display = 'block';
+                        
+                        // Hide interview card
+                        document.getElementById('interviewCard').style.display = 'none';
+                        
+                        // Reset timer
+                        stopTimer();
+                        
+                        // Redirect to analysis page (in a real app)
+                        // window.location.href = "/hire_recommendation?interview_id=123";
+                    }, 2000);
+                }
+            });
+            
+            function addSystemMessage(text) {
+                const chatContainer = document.getElementById('interviewChat');
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'text-center my-2';
+                messageDiv.innerHTML = `<span class="badge bg-secondary">${text}</span>`;
+                chatContainer.appendChild(messageDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+        });
+    </script>
+</body>
+</html>

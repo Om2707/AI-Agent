@@ -1,0 +1,418 @@
+{% extends "base.html" %}
+
+{% block title %}Resume Ranker - Llama Agentic AI Recruitment App{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <h1 class="text-center">Resume Ranker</h1>
+        <p class="text-center">Upload a job description and candidate resumes to get a ranked list of the best matches.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Job Description</h5>
+            </div>
+            <div class="card-body">
+                <form id="jobDescriptionForm">
+                    <div class="mb-3">
+                        <label for="jobTitle" class="form-label">Job Title</label>
+                        <input type="text" class="form-control" id="jobTitle" placeholder="e.g., Senior Software Engineer">
+                    </div>
+                    <div class="mb-3">
+                        <label for="jobDescription" class="form-label">Job Description</label>
+                        <textarea class="form-control" id="jobDescription" rows="10" placeholder="Paste or enter the job description here..."></textarea>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="useExistingJD">
+                        <label class="form-check-label" for="useExistingJD">
+                            Use existing job description from JD Generator
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Upload Resumes</h5>
+            </div>
+            <div class="card-body">
+                <form id="resumeUploadForm">
+                    <div class="mb-3">
+                        <label for="resumeFiles" class="form-label">Upload Multiple Resumes (PDF, DOCX)</label>
+                        <input class="form-control" type="file" id="resumeFiles" multiple accept=".pdf,.docx">
+                    </div>
+                    <div class="mb-3">
+                        <p>Uploaded Resumes: <span id="resumeCount">0</span></p>
+                        <div id="uploadedResumesList" class="list-group">
+                            <!-- Resume list will be populated here -->
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 text-center mb-4">
+        <button id="rankResumesBtn" class="btn btn-primary btn-lg">Rank Resumes</button>
+    </div>
+</div>
+
+<div class="row mb-4" id="resultsSection" style="display: none;">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Ranking Results</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-3">
+                    <h6>Top Candidates for <span id="resultJobTitle">Job Title</span></h6>
+                    <button class="btn btn-sm btn-outline-primary" id="exportResultsBtn">Export Results</button>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Rank</th>
+                                <th scope="col">Candidate Name</th>
+                                <th scope="col">Match Score</th>
+                                <th scope="col">Key Skills Match</th>
+                                <th scope="col">Experience Match</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rankedResumesList">
+                            <!-- Results will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div id="noResultsMessage" class="alert alert-info text-center" style="display: none;">
+                    No matching resumes found.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Resume Analysis</h5>
+            </div>
+            <div class="card-body" id="resumeAnalysisSection" style="display: none;">
+                <h6>Resume Analysis for <span id="selectedCandidateName">Candidate Name</span></h6>
+                
+                <ul class="nav nav-tabs" id="resumeAnalysisTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary" type="button" role="tab">Summary</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="skills-tab" data-bs-toggle="tab" data-bs-target="#skills" type="button" role="tab">Skills Analysis</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="experience-tab" data-bs-toggle="tab" data-bs-target="#experience" type="button" role="tab">Experience</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="gaps-tab" data-bs-toggle="tab" data-bs-target="#gaps" type="button" role="tab">Gaps & Concerns</button>
+                    </li>
+                </ul>
+                
+                <div class="tab-content p-3 border border-top-0 rounded-bottom" id="resumeAnalysisTabContent">
+                    <div class="tab-pane fade show active" id="summary" role="tabpanel">
+                        <p id="candidateSummary">Candidate summary will appear here.</p>
+                    </div>
+                    <div class="tab-pane fade" id="skills" role="tabpanel">
+                        <div id="skillsMatch">Skills analysis will appear here.</div>
+                    </div>
+                    <div class="tab-pane fade" id="experience" role="tabpanel">
+                        <div id="experienceMatch">Experience analysis will appear here.</div>
+                    </div>
+                    <div class="tab-pane fade" id="gaps" role="tabpanel">
+                        <div id="gapsAndConcerns">Gaps and concerns will appear here.</div>
+                    </div>
+                </div>
+                
+                <div class="mt-3 d-flex justify-content-between">
+                    <div>
+                        <button class="btn btn-outline-primary me-2" id="emailCandidateBtn">Email Candidate</button>
+                        <button class="btn btn-outline-primary me-2" id="scheduleInterviewBtn">Schedule Interview</button>
+                    </div>
+                    <button class="btn btn-outline-secondary" id="closeAnalysisBtn">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Resume upload handling
+        const resumeFiles = document.getElementById('resumeFiles');
+        const resumeCount = document.getElementById('resumeCount');
+        const uploadedResumesList = document.getElementById('uploadedResumesList');
+        
+        resumeFiles.addEventListener('change', function() {
+            uploadedResumesList.innerHTML = '';
+            
+            if (this.files.length > 0) {
+                resumeCount.textContent = this.files.length;
+                
+                Array.from(this.files).forEach((file, index) => {
+                    const listItem = document.createElement('div');
+                    listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+                    listItem.innerHTML = `
+                        <span>${file.name}</span>
+                        <span class="badge bg-primary rounded-pill">${(file.size / 1024).toFixed(2)} KB</span>
+                    `;
+                    uploadedResumesList.appendChild(listItem);
+                });
+            } else {
+                resumeCount.textContent = '0';
+            }
+        });
+        
+        // Rank Resumes button click handler
+        document.getElementById('rankResumesBtn').addEventListener('click', function() {
+            const jobTitle = document.getElementById('jobTitle').value;
+            const jobDescription = document.getElementById('jobDescription').value;
+            const files = document.getElementById('resumeFiles').files;
+            
+            if (!jobTitle || !jobDescription) {
+                alert('Please enter a job title and description.');
+                return;
+            }
+            
+            if (files.length === 0) {
+                alert('Please upload at least one resume.');
+                return;
+            }
+            
+            // Show loading state
+            this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Ranking...';
+            this.disabled = true;
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                // Simulated results
+                const results = simulateRankingResults(jobTitle, files);
+                displayResults(results, jobTitle);
+                
+                // Reset button
+                this.innerHTML = 'Rank Resumes';
+                this.disabled = false;
+                
+                // Show results section
+                document.getElementById('resultsSection').style.display = 'block';
+            }, 2000);
+        });
+        
+        // Handle candidate selection for detailed analysis
+        document.getElementById('rankedResumesList').addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('view-details-btn')) {
+                const candidateId = e.target.dataset.candidateId;
+                const candidateName = e.target.dataset.candidateName;
+                
+                // Show analysis section and populate data
+                const analysisSection = document.getElementById('resumeAnalysisSection');
+                analysisSection.style.display = 'block';
+                document.getElementById('selectedCandidateName').textContent = candidateName;
+                
+                // Simulate fetching candidate details
+                const candidateDetails = simulateCandidateDetails(candidateId, candidateName);
+                document.getElementById('candidateSummary').innerHTML = candidateDetails.summary;
+                document.getElementById('skillsMatch').innerHTML = candidateDetails.skills;
+                document.getElementById('experienceMatch').innerHTML = candidateDetails.experience;
+                document.getElementById('gapsAndConcerns').innerHTML = candidateDetails.gaps;
+                
+                // Scroll to analysis section
+                analysisSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+        
+        // Close analysis button
+        document.getElementById('closeAnalysisBtn').addEventListener('click', function() {
+            document.getElementById('resumeAnalysisSection').style.display = 'none';
+        });
+        
+        // Email candidate button
+        document.getElementById('emailCandidateBtn').addEventListener('click', function() {
+            const candidateName = document.getElementById('selectedCandidateName').textContent;
+            alert(`Redirecting to Email Automation for ${candidateName}`);
+            // In a real implementation, this would redirect to the email automation page
+        });
+        
+        // Schedule interview button
+        document.getElementById('scheduleInterviewBtn').addEventListener('click', function() {
+            const candidateName = document.getElementById('selectedCandidateName').textContent;
+            alert(`Redirecting to Interview Scheduler for ${candidateName}`);
+            // In a real implementation, this would redirect to the interview scheduler page
+        });
+        
+        // Helper function to simulate ranking results
+        function simulateRankingResults(jobTitle, files) {
+            const results = [];
+            
+            for (let i = 0; i < files.length; i++) {
+                const fileName = files[i].name;
+                // Extract name from filename (assuming format like "John_Doe_Resume.pdf")
+                const nameParts = fileName.split('_');
+                let candidateName = 'Candidate ' + (i + 1);
+                
+                if (nameParts.length >= 2) {
+                    candidateName = nameParts[0] + ' ' + nameParts[1];
+                }
+                
+                // Generate random match score between 60 and 98
+                const matchScore = Math.floor(Math.random() * (98 - 60 + 1)) + 60;
+                const skillsMatch = Math.floor(Math.random() * (100 - 50 + 1)) + 50;
+                const experienceMatch = Math.floor(Math.random() * (100 - 50 + 1)) + 50;
+                
+                results.push({
+                    id: 'candidate-' + i,
+                    name: candidateName,
+                    score: matchScore,
+                    skills: skillsMatch,
+                    experience: experienceMatch
+                });
+            }
+            
+            // Sort by score in descending order
+            results.sort((a, b) => b.score - a.score);
+            
+            return results;
+        }
+        
+        // Helper function to display results
+        function displayResults(results, jobTitle) {
+            const resultsList = document.getElementById('rankedResumesList');
+            resultsList.innerHTML = '';
+            
+            document.getElementById('resultJobTitle').textContent = jobTitle;
+            
+            if (results.length === 0) {
+                document.getElementById('noResultsMessage').style.display = 'block';
+                return;
+            }
+            
+            document.getElementById('noResultsMessage').style.display = 'none';
+            
+            results.forEach((candidate, index) => {
+                const row = document.createElement('tr');
+                
+                // Add color coding for match score
+                let scoreClass = 'text-danger';
+                if (candidate.score >= 90) {
+                    scoreClass = 'text-success';
+                } else if (candidate.score >= 75) {
+                    scoreClass = 'text-primary';
+                } else if (candidate.score >= 60) {
+                    scoreClass = 'text-warning';
+                }
+                
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${candidate.name}</td>
+                    <td class="${scoreClass}">${candidate.score}%</td>
+                    <td>${candidate.skills}%</td>
+                    <td>${candidate.experience}%</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary view-details-btn" 
+                                data-candidate-id="${candidate.id}" 
+                                data-candidate-name="${candidate.name}">
+                            View Details
+                        </button>
+                    </td>
+                `;
+                
+                resultsList.appendChild(row);
+            });
+        }
+        
+        // Helper function to simulate candidate details
+        function simulateCandidateDetails(candidateId, candidateName) {
+            // In a real application, this would fetch data from an API
+            return {
+                summary: `<p>${candidateName} is a strong candidate for the position with relevant experience and skill set. 
+                          The resume demonstrates a good match to the job requirements, particularly in technical skills and 
+                          industry background.</p>
+                          <p>Overall Recommendation: <span class="badge bg-success">Highly Recommended</span></p>`,
+                          
+                skills: `<h6>Skills Analysis</h6>
+                         <div class="progress mb-3">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 85%">Required Skills Match: 85%</div>
+                         </div>
+                         <div class="mt-3">
+                            <h6>Key Skills Found:</h6>
+                            <ul>
+                                <li><span class="badge bg-success">Python</span> - Advanced proficiency</li>
+                                <li><span class="badge bg-success">Machine Learning</span> - 3+ years experience</li>
+                                <li><span class="badge bg-success">Data Analysis</span> - Multiple projects</li>
+                                <li><span class="badge bg-warning">Cloud Architecture</span> - Basic knowledge</li>
+                            </ul>
+                            
+                            <h6>Missing Skills:</h6>
+                            <ul>
+                                <li><span class="badge bg-danger">Kubernetes</span> - Not mentioned</li>
+                                <li><span class="badge bg-warning">Docker</span> - Limited experience</li>
+                            </ul>
+                         </div>`,
+                         
+                experience: `<h6>Experience Analysis</h6>
+                             <div class="progress mb-3">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 78%">Experience Match: 78%</div>
+                             </div>
+                             <div class="mt-3">
+                                <h6>Work History:</h6>
+                                <ul>
+                                    <li><strong>Senior Developer</strong> at TechCorp (2018-Present)
+                                        <ul>
+                                            <li>Led development team of 5 engineers</li>
+                                            <li>Implemented ML algorithms for predictive analytics</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Software Engineer</strong> at DataInc (2015-2018)
+                                        <ul>
+                                            <li>Built data processing pipelines</li>
+                                            <li>Contributed to open-source projects</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                
+                                <h6>Education:</h6>
+                                <ul>
+                                    <li>M.S. Computer Science - State University (2015)</li>
+                                    <li>B.S. Information Technology - Tech Institute (2013)</li>
+                                </ul>
+                             </div>`,
+                             
+                gaps: `<h6>Potential Concerns</h6>
+                       <div class="alert alert-warning">
+                           <ul>
+                               <li>Gap in employment between 2013-2015</li>
+                               <li>Limited experience with cloud technologies compared to job requirements</li>
+                               <li>No mention of team leadership experience in a similar context</li>
+                           </ul>
+                       </div>
+                       
+                       <h6>Recommended Follow-up Questions:</h6>
+                       <ol>
+                           <li>Can you describe your experience with cloud platforms like AWS or Azure?</li>
+                           <li>Have you worked with containerization technologies like Docker or Kubernetes?</li>
+                           <li>What was your approach to leading development teams in your previous roles?</li>
+                       </ol>`
+            };
+        }
+    });
+</script>
+{% endblock %}

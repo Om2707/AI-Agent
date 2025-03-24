@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hire Recommendation Agent - Llama Agentic AI Recruitment App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/Chart.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Llama Agentic AI Recruitment</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">JD Generator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Resume Ranker</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Email Automation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Interview Scheduler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Interview Agent</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Hire Recommendation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Sentiment Analyzer</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                <h1>Hire Recommendation Agent</h1>
+                <p class="lead">AI-powered analysis of interview transcripts to identify candidate strengths, weaknesses, and provide hire/no-hire recommendations.</p>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Select Interview</h5>
+                        <form id="interviewSelectForm">
+                            <div class="mb-3">
+                                <label for="interviewSelect" class="form-label">Choose a completed interview</label>
+                                <select class="form-select" id="interviewSelect" required>
+                                    <option value="" selected disabled>Select an interview...</option>
+                                    <option value="1">John Doe - Software Engineer (Mar 24, 2025)</option>
+                                    <option value="2">Jane Smith - Product Manager (Mar 23, 2025)</option>
+                                    <option value="3">Michael Johnson - UX Designer (Mar 22, 2025)</option>
+                                    <option value="4">Emily Brown - Data Scientist (Mar 21, 2025)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="analysisDepth" class="form-label">Analysis Depth</label>
+                                <select class="form-select" id="analysisDepth">
+                                    <option value="basic">Basic (Quick overview)</option>
+                                    <option value="standard" selected>Standard (Recommended)</option>
+                                    <option value="deep">Deep (Detailed analysis)</option>
+                                </select>
+                                <div class="form-text">Deeper analysis takes longer but provides more insights</div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="evaluationCriteria" class="form-label">Evaluation Criteria</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="technical" id="technicalSkills" checked>
+                                    <label class="form-check-label" for="technicalSkills">Technical Skills</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="communication" id="communication" checked>
+                                    <label class="form-check-label" for="communication">Communication</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="problemSolving" id="problemSolving" checked>
+                                    <label class="form-check-label" for="problemSolving">Problem Solving</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="culturalFit" id="culturalFit" checked>
+                                    <label class="form-check-label" for="culturalFit">Cultural Fit</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="experience" id="experience" checked>
+                                    <label class="form-check-label" for="experience">Experience</label>
+                                </div>
+                            </div>
+                            
+                            <button type="button" id="analyzeBtn" class="btn btn-primary w-100">Analyze Interview</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="card mb-4">
+                    <div class="card-header">Recent Analyses</div>
+                    <div class="card-body p-0">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Emily Brown - Data Scientist
+                                <span class="badge bg-success rounded-pill">Hire</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Michael Johnson - UX Designer
+                                <span class="badge bg-warning text-dark rounded-pill">Consider</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Alex Wilson - Frontend Developer
+                                <span class="badge bg-danger rounded-pill">Reject</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-8">
+                <div class="card mb-4" id="loadingCard" style="display: none;">
+                    <div class="card-body text-center p-5">
+                        <div class="spinner-border text-primary mb-3" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <h5>Analyzing Interview Data</h5>
+                        <p class="text-muted">Llama 3.x is processing the interview transcript and generating insights...</p>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 75%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mb-4" id="analysisCard" style="display: none;">
+                    <div class="card-header d-flex justify-content-between">
+                        <div>
+                            <span id="candidateName">John Doe</span> - <span id="positionName">Software Engineer</span>
+                        </div>
+                        <div>
+                            <span id="recommendationBadge" class="badge bg-success">Recommended for Hire</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <h5>Overall Score</h5>
+                                <div class="progress mb-3" style="height: 25px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 85%">85%</div>
+                                </div>
+                                <p class="text-muted">Based on interview performance and job requirements</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Skill Profile</h5>
+                                <canvas id="skillsChart" width="300" height="200"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="card h-100">
+                                    <div class="card-header">Key Strengths</div>
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">
+                                                <strong>Technical Knowledge</strong>
+                                                <p class="mb-0 text-muted">Demonstrated strong understanding of system architecture and database design</p>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <strong>Problem Solving</strong>
+                                                <p class="mb-0 text-muted">Excellent approach to breaking down complex problems</p>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <strong>Communication</strong>
+                                                <p class="mb-0 text-muted">Clear, concise explanations of technical concepts</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100">
+                                    <div class="card-header">Areas for Improvement</div>
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">
+                                                <strong>Frontend Experience</strong>
+                                                <p class="mb-0 text-muted">Limited hands-on experience with modern frontend frameworks</p>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <strong>Team Leadership</strong>
+                                                <p class="mb-0 text-muted">Could benefit from more experience in leading development teams</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header">Detailed Assessment</div>
+                                    <div class="card-body">
+                                        <h6>Technical Skills</h6>
+                                        <p>The candidate demonstrated strong proficiency in backend development, particularly with Python and Java. Their understanding of database optimization and system architecture is above average. They have experience with containerization using Docker and orchestration with Kubernetes.</p>
+                                        
+                                        <h6>Problem Solving Approach</h6>
+                                        <p>When presented with algorithmic challenges, the candidate methodically broke down the problem, considered edge cases, and implemented efficient solutions. They showed good analytical thinking and the ability to optimize for both time and space complexity.</p>
+                                        
+                                        <h6>Cultural Fit & Teamwork</h6>
+                                        <p>The candidate's responses indicate a collaborative approach to work. They provided clear examples of past conflicts and how they were resolved professionally. Their work style aligns well with the company's agile methodology.</p>
+                                        
+                                        <h6>Experience & Background</h6>
+                                        <p>With 5 years of relevant experience, the candidate has worked on similar projects to what our team handles. Their experience with high-traffic applications is particularly valuable for our current initiatives.</p>
+                                        
+                                        <div class="alert alert-primary mt-3">
+                                            <h6 class="alert-heading">Final Recommendation</h6>
+                                            <p class="mb-0">Based on comprehensive analysis of the interview transcript, we recommend proceeding with an offer for this candidate. Their technical skills, problem-solving abilities, and relevant experience make them a strong match for the role.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between">
+                            <button type="button" class="btn btn-outline-secondary">View Full Transcript</button>
+                            <div>
+                                <button type="button" class="btn btn-outline-primary me-2">Export Report</button>
+                                <button type="button" class="btn btn-success">Proceed with Offer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mt-5 py-3 bg-light text-center">
+        <div class="container">
+            <p>© 2025 Llama Agentic AI Recruitment App</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Analyze button functionality
+            document.getElementById('analyzeBtn').addEventListener('click', function() {
+                const interviewSelect = document.getElementById('interviewSelect');
+                if (interviewSelect.value) {
+                    // Show loading card
+                    document.getElementById('loadingCard').style.display = 'block';
+                    document.getElementById('analysisCard').style.display = 'none';
+                    
+                    // Simulate API call and processing time
+                    setTimeout(function() {
+                        // Hide loading card
+                        document.getElementById('loadingCard').style.display = 'none';
+                        
+                        // Show analysis card
+                        document.getElementById('analysisCard').style.display = 'block';
+                        
+                        // Update candidate name and position
+                        const candidateInfo = interviewSelect.options[interviewSelect.selectedIndex].text;
+                        const nameParts = candidateInfo.split(' - ');
+                        document.getElementById('candidateName').textContent = nameParts[0];
+                        document.getElementById('positionName').textContent = nameParts[1].split(' (')[0];
+                        
+                        // Initialize skill chart
+                        initSkillChart();
+                    }, 2500);
+                } else {
+                    alert('Please select an interview to analyze.');
+                }
+            });
+            
+            // Initialize skills radar chart
+            function initSkillChart() {
+                const ctx = document.getElementById('skillsChart').getContext('2d');
+                
+                new Chart(ctx, {
+                    type: 'radar',
+                    data: {
+                        labels: [
+                            'Technical Skills',
+                            'Problem Solving',
+                            'Communication',
+                            'Team Collaboration',
+                            'Domain Knowledge'
+                        ],
+                        datasets: [{
+                            label: 'Candidate',
+                            data: [85, 90, 80, 75, 70],
+                            fill: true,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgb(54, 162, 235)',
+                            pointBackgroundColor: 'rgb(54, 162, 235)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgb(54, 162, 235)'
+                        }, {
+                            label: 'Job Requirement',
+                            data: [80, 75, 70, 80, 85],
+                            fill: true,
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgb(255, 99, 132)',
+                            pointBackgroundColor: 'rgb(255, 99, 132)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgb(255, 99, 132)'
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            r: {
+                                angleLines: {
+                                    display: true
+                                },
+                                suggestedMin: 0,
+                                suggestedMax: 100
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

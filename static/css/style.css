@@ -1,0 +1,336 @@
+/* Main Styling for Llama Agentic AI Recruitment App */
+:root {
+    --llama-primary: #6a5acd;
+    --llama-secondary: #2f4f4f;
+    --llama-accent: #7b68ee;
+    --llama-light: #e6e6fa;
+    --llama-dark: #483d8b;
+}
+
+/* Custom Branding */
+.navbar-brand {
+    font-weight: bold;
+    color: white !important;
+}
+
+.navbar-dark {
+    background-color: var(--llama-dark) !important;
+}
+
+.nav-link.active {
+    background-color: var(--llama-accent) !important;
+    border-radius: 4px;
+}
+
+/* Page Titles */
+.page-title {
+    color: var(--llama-dark);
+    border-bottom: 2px solid var(--llama-light);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Cards & UI Elements */
+.card {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary {
+    background-color: var(--llama-primary);
+    border-color: var(--llama-primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--llama-dark);
+    border-color: var(--llama-dark);
+}
+
+/* Model Status Indicator */
+.model-status {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    margin-left: 15px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: white;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #2ecc71;
+    margin-right: 6px;
+    display: inline-block;
+}
+
+/* Loading Overlay */
+#loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+#loading-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.loading-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+#loading-message {
+    margin-top: 10px;
+    color: var(--llama-primary);
+}
+
+/* File Upload Styling */
+.file-upload {
+    border: 2px dashed #ddd;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    margin-bottom: 15px;
+    transition: border-color 0.2s;
+}
+
+.file-upload:hover {
+    border-color: var(--llama-accent);
+}
+
+.file-upload input[type="file"] {
+    display: none;
+}
+
+.file-label {
+    cursor: pointer;
+    padding: 8px 16px;
+    background-color: var(--llama-light);
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+
+.file-label:hover {
+    background-color: var(--llama-accent);
+    color: white;
+}
+
+.file-preview {
+    margin-top: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    min-height: 100px;
+}
+
+/* Resume Ranking Results */
+.skill-list, .missing-list {
+    padding-left: 18px;
+}
+
+.skill-list li {
+    color: #2ecc71;
+}
+
+.missing-list li {
+    color: #e74c3c;
+}
+
+/* Interview Agent Styling */
+#interview-container {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.interview-header {
+    background-color: var(--llama-light);
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.question-container {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+#interview-question {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.answer-container {
+    margin-top: 15px;
+}
+
+.llama-thinking {
+    display: flex;
+    align-items: center;
+    color: var(--llama-primary);
+    font-style: italic;
+    margin: 10px 0;
+}
+
+.llama-thinking .spinner-border {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 8px;
+}
+
+/* Sentiment Analysis Styling */
+.sentiment-moments {
+    list-style: none;
+    padding: 0;
+}
+
+.sentiment-moments li {
+    border-bottom: 1px solid #eee;
+    padding: 8px 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.timestamp {
+    font-weight: 500;
+    margin-right: 8px;
+    color: var(--llama-secondary);
+}
+
+.moment-text {
+    flex: 1;
+    margin-right: 8px;
+}
+
+/* Hire Recommendation Styling */
+.recommendation-summary {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid var(--llama-primary);
+}
+
+.recommendation-decision {
+    padding: 15px;
+    border-radius: 8px;
+    background-color: var(--llama-light);
+}
+
+/* Candidate Detail Modal */
+.candidate-profile {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.skill-match {
+    margin-bottom: 10px;
+}
+
+.skill-match span {
+    display: block;
+    margin-bottom: 3px;
+}
+
+.requirement-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.requirement-list li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 8px;
+}
+
+.requirement-list li:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+}
+
+.requirement-list li.matched:before {
+    background-color: #2ecc71;
+}
+
+.requirement-list li.partial:before {
+    background-color: #f39c12;
+}
+
+.requirement-list li.missing:before {
+    background-color: #e74c3c;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 15px;
+    }
+    
+    .sentiment-moments li {
+        flex-direction: column;
+    }
+    
+    .timestamp, .moment-text {
+        margin-bottom: 5px;
+    }
+}
+
+/* Footer Styling */
+footer {
+    margin-top: 50px !important;
+    background-color: var(--llama-light) !important;
+    color: var(--llama-secondary);
+}
+
+/* AI-specific branding elements */
+.ai-badge {
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--llama-light);
+    color: var(--llama-dark);
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-left: 8px;
+}
+
+.ai-badge:before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: var(--llama-primary);
+    border-radius: 50%;
+    margin-right: 5px;
+}

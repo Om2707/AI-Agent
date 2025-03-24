@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Scheduler - Llama Agentic AI Recruitment App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Llama Agentic AI Recruitment</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">JD Generator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Resume Ranker</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Email Automation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Interview Scheduler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Interview Agent</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Hire Recommendation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Sentiment Analyzer</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="mb-4">Interview Scheduler</h1>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Schedule a New Interview</h5>
+                        <p class="card-text">Use AI to find optimal interview slots and send calendar invites automatically.</p>
+                        
+                        <form id="scheduleForm">
+                            <div class="mb-3">
+                                <label for="candidateSelect" class="form-label">Select Candidate</label>
+                                <select class="form-select" id="candidateSelect" required>
+                                    <option value="" selected disabled>Choose a candidate...</option>
+                                    <option value="1">John Doe - Software Engineer</option>
+                                    <option value="2">Jane Smith - Product Manager</option>
+                                    <option value="3">Michael Johnson - UX Designer</option>
+                                    <option value="4">Emily Brown - Data Scientist</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="interviewType" class="form-label">Interview Type</label>
+                                <select class="form-select" id="interviewType" required>
+                                    <option value="" selected disabled>Select interview type...</option>
+                                    <option value="technical">Technical Interview</option>
+                                    <option value="behavioral">Behavioral Interview</option>
+                                    <option value="cultural">Cultural Fit Interview</option>
+                                    <option value="final">Final Round Interview</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="interviewers" class="form-label">Select Interviewers</label>
+                                <select class="form-select" id="interviewers" multiple required>
+                                    <option value="interviewer1">Alex Chen - Senior Developer</option>
+                                    <option value="interviewer2">Sarah Wilson - Engineering Manager</option>
+                                    <option value="interviewer3">David Park - CTO</option>
+                                    <option value="interviewer4">Lisa Thompson - HR Director</option>
+                                </select>
+                                <div class="form-text">Hold Ctrl/Cmd to select multiple interviewers</div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="preferredDates" class="form-label">Preferred Dates</label>
+                                <input type="text" class="form-control" id="preferredDates" placeholder="Select multiple dates">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="duration" class="form-label">Interview Duration</label>
+                                <select class="form-select" id="duration" required>
+                                    <option value="30">30 minutes</option>
+                                    <option value="45">45 minutes</option>
+                                    <option value="60" selected>60 minutes</option>
+                                    <option value="90">90 minutes</option>
+                                    <option value="120">2 hours</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="notes" class="form-label">Additional Notes</label>
+                                <textarea class="form-control" id="notes" rows="3" placeholder="Any special requirements or topics to cover"></textarea>
+                            </div>
+                            
+                            <button type="button" id="findSlotsBtn" class="btn btn-primary">Find Available Slots</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="card mb-4" id="availableSlotsCard" style="display: none;">
+                    <div class="card-body">
+                        <h5 class="card-title">AI-Recommended Interview Slots</h5>
+                        <p class="card-text">Our AI has analyzed calendars and found these optimal slots:</p>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Duration</th>
+                                        <th>Interviewers Available</th>
+                                        <th>Confidence Score</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="slotsTableBody">
+                                    <!-- Slots will be dynamically populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mb-4" id="confirmationCard" style="display: none;">
+                    <div class="card-body text-center">
+                        <div class="mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-calendar-check text-success" viewBox="0 0 16 16">
+                                <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                            </svg>
+                        </div>
+                        <h4 class="card-title text-success">Interview Scheduled Successfully!</h4>
+                        <p class="card-text">Calendar invites have been sent to all participants.</p>
+                        <div class="mt-4">
+                            <button type="button" class="btn btn-outline-primary me-2">View Details</button>
+                            <button type="button" class="btn btn-outline-secondary">Schedule Another</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Upcoming Interviews</h5>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Candidate</th>
+                                        <th>Position</th>
+                                        <th>Date & Time</th>
+                                        <th>Type</th>
+                                        <th>Interviewers</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>John Doe</td>
+                                        <td>Software Engineer</td>
+                                        <td>Mar 26, 2025 - 10:00 AM</td>
+                                        <td>Technical</td>
+                                        <td>Alex Chen, Sarah Wilson</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary">Reschedule</button>
+                                            <button class="btn btn-sm btn-outline-danger">Cancel</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jane Smith</td>
+                                        <td>Product Manager</td>
+                                        <td>Mar 27, 2025 - 2:30 PM</td>
+                                        <td>Final Round</td>
+                                        <td>David Park, Lisa Thompson</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary">Reschedule</button>
+                                            <button class="btn btn-sm btn-outline-danger">Cancel</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mt-5 py-3 bg-light text-center">
+        <div class="container">
+            <p>© 2025 Llama Agentic AI Recruitment App</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize date picker
+            flatpickr("#preferredDates", {
+                mode: "multiple",
+                dateFormat: "Y-m-d",
+                minDate: "today",
+                maxDate: new Date().fp_incr(30) // Allow scheduling up to 30 days in advance
+            });
+            
+            // Find slots button functionality
+            document.getElementById('findSlotsBtn').addEventListener('click', function() {
+                // Simulate API call to find available slots
+                setTimeout(function() {
+                    // Display available slots card
+                    document.getElementById('availableSlotsCard').style.display = 'block';
+                    
+                    // Populate sample data
+                    const slotsTableBody = document.getElementById('slotsTableBody');
+                    slotsTableBody.innerHTML = `
+                        <tr>
+                            <td>Mar 26, 2025</td>
+                            <td>10:00 AM</td>
+                            <td>60 min</td>
+                            <td>Alex Chen, Sarah Wilson</td>
+                            <td><span class="badge bg-success">High (95%)</span></td>
+                            <td><button class="btn btn-sm btn-primary scheduleBtn">Schedule</button></td>
+                        </tr>
+                        <tr>
+                            <td>Mar 26, 2025</td>
+                            <td>2:30 PM</td>
+                            <td>60 min</td>
+                            <td>Alex Chen, David Park</td>
+                            <td><span class="badge bg-success">High (90%)</span></td>
+                            <td><button class="btn btn-sm btn-primary scheduleBtn">Schedule</button></td>
+                        </tr>
+                        <tr>
+                            <td>Mar 27, 2025</td>
+                            <td>11:15 AM</td>
+                            <td>60 min</td>
+                            <td>Sarah Wilson, Lisa Thompson</td>
+                            <td><span class="badge bg-warning text-dark">Medium (75%)</span></td>
+                            <td><button class="btn btn-sm btn-primary scheduleBtn">Schedule</button></td>
+                        </tr>
+                    `;
+                    
+                    // Add event listeners to schedule buttons
+                    document.querySelectorAll('.scheduleBtn').forEach(button => {
+                        button.addEventListener('click', function() {
+                            // Hide slots card
+                            document.getElementById('availableSlotsCard').style.display = 'none';
+                            
+                            // Show confirmation card
+                            document.getElementById('confirmationCard').style.display = 'block';
+                            
+                            // Scroll to confirmation card
+                            document.getElementById('confirmationCard').scrollIntoView({
+                                behavior: 'smooth'
+                            });
+                        });
+                    });
+                }, 1500); // Simulate processing delay
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,281 @@
+{% extends "base.html" %}
+
+{% block title %}Sentiment Analyzer - Llama Agentic AI Recruitment App{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <h1>Sentiment Analyzer</h1>
+        <p class="lead">Analyze candidate's emotional tone and confidence from interview transcripts.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Upload Interview Transcript</h5>
+            </div>
+            <div class="card-body">
+                <form id="sentimentForm" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="candidateName" class="form-label">Candidate Name</label>
+                        <input type="text" class="form-control" id="candidateName" name="candidateName" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="jobTitle" class="form-label">Job Position</label>
+                        <input type="text" class="form-control" id="jobTitle" name="jobTitle" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="transcriptSource" class="form-label">Transcript Source</label>
+                        <select class="form-select" id="transcriptSource" name="transcriptSource">
+                            <option value="video">Video Recording</option>
+                            <option value="audio">Audio Recording</option>
+                            <option value="text">Text Transcript</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="transcriptFile" class="form-label">Upload Transcript File</label>
+                        <input type="file" class="form-control" id="transcriptFile" name="transcriptFile">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="transcriptText" class="form-label">Or Paste Transcript Text</label>
+                        <textarea class="form-control" id="transcriptText" name="transcriptText" rows="10" placeholder="Paste the interview transcript here..."></textarea>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary" id="analyzeBtn">Analyze Sentiment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4" id="resultSection" style="display: none;">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Sentiment Analysis Results</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Candidate Information</h5>
+                        <p><strong>Name:</strong> <span id="resultName"></span></p>
+                        <p><strong>Position:</strong> <span id="resultPosition"></span></p>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <h5>Overall Sentiment Score</h5>
+                        <div class="progress mb-3">
+                            <div class="progress-bar" id="overallSentiment" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <p><strong>Sentiment Classification:</strong> <span id="sentimentClass" class="badge"></span></p>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <h5>Detailed Analysis</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Confidence Indicators</h6>
+                        <div class="mb-2">
+                            <label class="form-label">Verbal Confidence</label>
+                            <div class="progress">
+                                <div class="progress-bar bg-info" id="verbalConfidence" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Language Clarity</label>
+                            <div class="progress">
+                                <div class="progress-bar bg-info" id="languageClarity" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Subject Matter Expertise</label>
+                            <div class="progress">
+                                <div class="progress-bar bg-info" id="subjectExpertise" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <h6>Emotional Tone Analysis</h6>
+                        <div class="mb-2">
+                            <label class="form-label">Enthusiasm</label>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" id="enthusiasm" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Stress Level</label>
+                            <div class="progress">
+                                <div class="progress-bar bg-danger" id="stressLevel" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Positive Language</label>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" id="positiveLanguage" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <h6>Key Phrases Analysis</h6>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Phrase</th>
+                                        <th>Sentiment</th>
+                                        <th>Confidence Level</th>
+                                        <th>Context</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="keyPhrasesTable">
+                                    <!-- Key phrases will be added here dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <h6>AI Recommendation</h6>
+                        <div class="alert alert-info" id="aiRecommendation">
+                            <!-- AI recommendation will be added here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+                    <button class="btn btn-secondary me-md-2" id="downloadBtn">Download Report</button>
+                    <button class="btn btn-primary" id="sendToHiringTeamBtn">Send to Hiring Team</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Form submission handler
+        document.getElementById('sentimentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading indicator (could be added to the UI)
+            document.getElementById('analyzeBtn').innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Analyzing...';
+            document.getElementById('analyzeBtn').disabled = true;
+            
+            // In a real implementation, you would send the form data to your backend
+            // For this demo, we'll simulate a response after a delay
+            setTimeout(function() {
+                // Display results section
+                document.getElementById('resultSection').style.display = 'block';
+                
+                // Populate the results with mock data
+                document.getElementById('resultName').textContent = document.getElementById('candidateName').value;
+                document.getElementById('resultPosition').textContent = document.getElementById('jobTitle').value;
+                
+                // Set random values for the sentiment metrics
+                setProgressBar('overallSentiment', 78, 'bg-success');
+                document.getElementById('sentimentClass').textContent = 'Positive';
+                document.getElementById('sentimentClass').classList.add('bg-success');
+                
+                setProgressBar('verbalConfidence', 85);
+                setProgressBar('languageClarity', 72);
+                setProgressBar('subjectExpertise', 68);
+                
+                setProgressBar('enthusiasm', 80);
+                setProgressBar('stressLevel', 35);
+                setProgressBar('positiveLanguage', 65);
+                
+                // Add sample key phrases
+                const keyPhrases = [
+                    { phrase: "I'm excited about this opportunity", sentiment: "Positive", confidence: "High", context: "When discussing career goals" },
+                    { phrase: "I managed a team of five developers", sentiment: "Neutral", confidence: "High", context: "When discussing previous experience" },
+                    { phrase: "It was challenging at times", sentiment: "Neutral", confidence: "Medium", context: "When discussing previous job" },
+                    { phrase: "I'm passionate about solving problems", sentiment: "Positive", confidence: "High", context: "When discussing motivation" },
+                    { phrase: "I struggled with the deadline", sentiment: "Negative", confidence: "Medium", context: "When discussing challenges" }
+                ];
+                
+                const keyPhrasesTable = document.getElementById('keyPhrasesTable');
+                keyPhrasesTable.innerHTML = '';
+                
+                keyPhrases.forEach(function(item) {
+                    const row = document.createElement('tr');
+                    
+                    const phraseCell = document.createElement('td');
+                    phraseCell.textContent = item.phrase;
+                    
+                    const sentimentCell = document.createElement('td');
+                    sentimentCell.textContent = item.sentiment;
+                    if (item.sentiment === 'Positive') {
+                        sentimentCell.classList.add('text-success');
+                    } else if (item.sentiment === 'Negative') {
+                        sentimentCell.classList.add('text-danger');
+                    }
+                    
+                    const confidenceCell = document.createElement('td');
+                    confidenceCell.textContent = item.confidence;
+                    
+                    const contextCell = document.createElement('td');
+                    contextCell.textContent = item.context;
+                    
+                    row.appendChild(phraseCell);
+                    row.appendChild(sentimentCell);
+                    row.appendChild(confidenceCell);
+                    row.appendChild(contextCell);
+                    
+                    keyPhrasesTable.appendChild(row);
+                });
+                
+                // Add AI recommendation
+                document.getElementById('aiRecommendation').innerHTML = 
+                    '<p><strong>Summary:</strong> The candidate shows high confidence and enthusiasm for the position. Their language indicates strong interest and positive attitude toward the role.</p>' +
+                    '<p><strong>Observation:</strong> The candidate appeared slightly stressed when discussing technical challenges, but maintained composure and presented solutions-oriented thinking.</p>' +
+                    '<p><strong>Recommendation:</strong> Consider this candidate\'s emotional intelligence and communication style as positive indicators for team fit.</p>';
+                
+                // Reset button
+                document.getElementById('analyzeBtn').innerHTML = 'Analyze Sentiment';
+                document.getElementById('analyzeBtn').disabled = false;
+                
+                // Scroll to results
+                document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+            }, 2000);
+        });
+        
+        // Helper function to set progress bar values
+        function setProgressBar(id, value, customClass) {
+            const element = document.getElementById(id);
+            element.style.width = value + '%';
+            element.setAttribute('aria-valuenow', value);
+            element.textContent = value + '%';
+            
+            if (customClass) {
+                element.className = 'progress-bar ' + customClass;
+            }
+        }
+        
+        // Download button handler
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            alert('Download functionality would be implemented here.');
+        });
+        
+        // Send to hiring team button handler
+        document.getElementById('sendToHiringTeamBtn').addEventListener('click', function() {
+            alert('Email would be sent to the hiring team with this analysis.');
+        });
+    });
+</script>
+{% endblock %}

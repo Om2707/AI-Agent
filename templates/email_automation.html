@@ -1,0 +1,487 @@
+{% extends "base.html" %}
+
+{% block title %}Email Automation - Llama Agentic AI Recruitment App{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <h1 class="text-center">Email Automation</h1>
+        <p class="text-center">Generate and send personalized emails to candidates and hiring teams.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Email Type</h5>
+            </div>
+            <div class="card-body">
+                <form id="emailTypeForm">
+                    <div class="mb-3">
+                        <label class="form-label">Select Email Template</label>
+                        <select class="form-select" id="emailTemplateSelect">
+                            <option value="">-- Select Template --</option>
+                            <option value="application_received">Application Received</option>
+                            <option value="interview_invitation">Interview Invitation</option>
+                            <option value="rejection">Rejection</option>
+                            <option value="offer_letter">Offer Letter</option>
+                            <option value="follow_up">Interview Follow-up</option>
+                            <option value="team_notification">Team Notification</option>
+                            <option value="custom">Custom Email</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Select Job Position</label>
+                        <select class="form-select" id="jobPositionSelect">
+                            <option value="">-- Select Position --</option>
+                            <option value="software_engineer">Software Engineer</option>
+                            <option value="data_scientist">Data Scientist</option>
+                            <option value="product_manager">Product Manager</option>
+                            <option value="ux_designer">UX Designer</option>
+                            <option value="marketing_specialist">Marketing Specialist</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3" id="candidateSelectorContainer" style="display: none;">
+                        <label class="form-label">Select Candidate(s)</label>
+                        <select class="form-select" id="candidateSelect" multiple size="5">
+                            <!-- Will be populated dynamically -->
+                        </select>
+                        <div class="form-text">Hold Ctrl/Cmd to select multiple candidates</div>
+                    </div>
+                    
+                    <div class="mb-3" id="teamSelectorContainer" style="display: none;">
+                        <label class="form-label">Notify Team Members</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="hiringManagerCheck" checked>
+                            <label class="form-check-label" for="hiringManagerCheck">Hiring Manager</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="recruiterCheck" checked>
+                            <label class="form-check-label" for="recruiterCheck">Recruiter</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="teamMembersCheck">
+                            <label class="form-check-label" for="teamMembersCheck">Team Members</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Email Settings</h5>
+            </div>
+            <div class="card-body">
+                <form id="emailSettingsForm">
+                    <div class="mb-3">
+                        <label for="senderName" class="form-label">Sender Name</label>
+                        <input type="text" class="form-control" id="senderName" value="Recruitment Team">
+                    </div>
+                    <div class="mb-3">
+                        <label for="senderEmail" class="form-label">Sender Email</label>
+                        <input type="email" class="form-control" id="senderEmail" value="recruitment@company.com">
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="sendCopyCheck">
+                            <label class="form-check-label" for="sendCopyCheck">
+                                Send me a copy
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="scheduleEmailCheck">
+                            <label class="form-check-label" for="scheduleEmailCheck">
+                                Schedule email for later
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mb-3" id="scheduleContainer" style="display: none;">
+                        <label for="scheduleDateTime" class="form-label">Schedule Date/Time</label>
+                        <input type="datetime-local" class="form-control" id="scheduleDateTime">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5>Email Content</h5>
+                <button class="btn btn-sm btn-outline-primary" id="generateEmailBtn">Generate with AI</button>
+            </div>
+            <div class="card-body">
+                <form id="emailContentForm">
+                    <div class="mb-3">
+                        <label for="emailSubject" class="form-label">Subject</label>
+                        <input type="text" class="form-control" id="emailSubject" placeholder="Email subject">
+                    </div>
+                    <div class="mb-3">
+                        <label for="emailBody" class="form-label">Email Body</label>
+                        <textarea class="form-control" id="emailBody" rows="12" placeholder="Email content..."></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Personalization Variables</label>
+                        <div class="d-flex flex-wrap gap-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary variable-btn" data-variable="{{candidate_name}}">Candidate Name</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary variable-btn" data-variable="{{job_title}}">Job Title</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary variable-btn" data-variable="{{company_name}}">Company Name</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary variable-btn" data-variable="{{interview_date}}">Interview Date</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary variable-btn" data-variable="{{hiring_manager}}">Hiring Manager</button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="includeSignatureCheck" checked>
+                            <label class="form-check-label" for="includeSignatureCheck">
+                                Include Email Signature
+                            </label>
+                        </div>
+                    </div>
+                    <div id="emailPreview" class="border p-3 mb-3 bg-light" style="display: none;">
+                        <h6>Preview:</h6>
+                        <div id="previewContent"></div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-outline-secondary" id="previewEmailBtn">Preview</button>
+                        <button type="button" class="btn btn-primary" id="sendEmailBtn">Send Email</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card mb-4" id="emailHistoryCard">
+            <div class="card-header">
+                <h5>Recent Email History</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Recipient</th>
+                                <th>Subject</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="emailHistoryList">
+                            <!-- Will be populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Email Sent Modal -->
+<div class="modal fade" id="emailSentModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Email Sent Successfully</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Your email has been sent successfully to <span id="recipientCount">0</span> recipient(s).</p>
+                <div class="alert alert-success">
+                    <i class="bi bi-check-circle-fill"></i> Email delivery confirmed.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="sendAnotherBtn">Send Another</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Sample data for demonstration
+        const candidates = [
+            { id: 1, name: 'John Smith', email: 'john.smith@example.com', position: 'software_engineer' },
+            { id: 2, name: 'Emily Johnson', email: 'emily.j@example.com', position: 'software_engineer' },
+            { id: 3, name: 'Michael Wong', email: 'michael.w@example.com', position: 'data_scientist' },
+            { id: 4, name: 'Sarah Chen', email: 'sarah.c@example.com', position: 'data_scientist' },
+            { id: 5, name: 'David Patel', email: 'david.p@example.com', position: 'product_manager' },
+            { id: 6, name: 'Jennifer Kim', email: 'jennifer.k@example.com', position: 'ux_designer' },
+            { id: 7, name: 'Robert Garcia', email: 'robert.g@example.com', position: 'marketing_specialist' }
+        ];
+        
+        const emailTemplates = {
+            application_received: {
+                subject: "We've received your application for {{job_title}}",
+                body: "Dear {{candidate_name}},\n\nThank you for applying for the {{job_title}} position at {{company_name}}. We have received your application and are currently reviewing it.\n\nWe appreciate your interest in joining our team and will be in touch shortly regarding next steps.\n\nBest regards,\n{{hiring_manager}}\nRecruitment Team\n{{company_name}}"
+            },
+            interview_invitation: {
+                subject: "Interview Invitation: {{job_title}} position at {{company_name}}",
+                body: "Dear {{candidate_name}},\n\nWe were impressed with your application for the {{job_title}} position and would like to invite you for an interview on {{interview_date}}.\n\nPlease let us know if this time works for you, or if you need to reschedule.\n\nWe look forward to speaking with you!\n\nBest regards,\n{{hiring_manager}}\nRecruitment Team\n{{company_name}}"
+            },
+            rejection: {
+                subject: "Regarding your application for {{job_title}} position",
+                body: "Dear {{candidate_name}},\n\nThank you for your interest in the {{job_title}} position at {{company_name}}.\n\nAfter careful consideration of your profile, we regret to inform you that we will not be moving forward with your application at this time. We received many qualified applications, and the selection process was highly competitive.\n\nWe appreciate the time you invested in applying and wish you success in your job search.\n\nBest regards,\n{{hiring_manager}}\nRecruitment Team\n{{company_name}}"
+            },
+            offer_letter: {
+                subject: "Job Offer: {{job_title}} at {{company_name}}",
+                body: "Dear {{candidate_name}},\n\nWe are pleased to offer you the position of {{job_title}} at {{company_name}}.\n\nWe were impressed with your background and believe you would be a valuable addition to our team. The full details of the offer, including compensation and benefits, are attached to this email.\n\nPlease review the offer and let us know if you have any questions. We look forward to your positive response.\n\nBest regards,\n{{hiring_manager}}\nRecruitment Team\n{{company_name}}"
+            },
+            follow_up: {
+                subject: "Follow-up on your interview for {{job_title}}",
+                body: "Dear {{candidate_name}},\n\nThank you for attending the interview for the {{job_title}} position on {{interview_date}}.\n\nWe enjoyed meeting you and learning more about your skills and experience. Our team is still in the process of interviewing candidates, and we will be in touch with you regarding the next steps soon.\n\nThank you for your patience and continued interest in joining {{company_name}}.\n\nBest regards,\n{{hiring_manager}}\nRecruitment Team\n{{company_name}}"
+            },
+            team_notification: {
+                subject: "New Interview Scheduled: {{candidate_name}} for {{job_title}}",
+                body: "Hello Team,\n\nThis is to inform you that an interview has been scheduled with {{candidate_name}} for the {{job_title}} position on {{interview_date}}.\n\nPlease review the candidate's resume attached to this email and prepare any relevant questions for the interview.\n\nThank you for your participation in the hiring process.\n\nBest regards,\nRecruitment Team\n{{company_name}}"
+            }
+        };
+        
+        const emailHistory = [
+            { date: '2025-03-22', type: 'Interview Invitation', recipient: 'John Smith', subject: 'Interview Invitation: Software Engineer position', status: 'Delivered' },
+            { date: '2025-03-20', type: 'Application Received', recipient: 'Emily Johnson', subject: "We've received your application for Data Scientist", status: 'Delivered' },
+            { date: '2025-03-18', type: 'Rejection', recipient: 'Michael Wong', subject: 'Regarding your application for UX Designer position', status: 'Delivered' },
+            { date: '2025-03-15', type: 'Team Notification', recipient: 'HR Team', subject: 'New Interview Scheduled: Sarah Chen for Product Manager', status: 'Delivered' }
+        ];
+        
+        // Populate email history table
+        const emailHistoryList = document.getElementById('emailHistoryList');
+        emailHistory.forEach(email => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${email.date}</td>
+                <td>${email.type}</td>
+                <td>${email.recipient}</td>
+                <td>${email.subject}</td>
+                <td><span class="badge bg-success">${email.status}</span></td>
+                <td>
+                    <button class="btn btn-sm btn-outline-secondary">Resend</button>
+                </td>
+            `;
+            emailHistoryList.appendChild(row);
+        });
+        
+        // Email template selection handling
+        const emailTemplateSelect = document.getElementById('emailTemplateSelect');
+        const jobPositionSelect = document.getElementById('jobPositionSelect');
+        const candidateSelectorContainer = document.getElementById('candidateSelectorContainer');
+        const teamSelectorContainer = document.getElementById('teamSelectorContainer');
+        const candidateSelect = document.getElementById('candidateSelect');
+        const emailSubject = document.getElementById('emailSubject');
+        const emailBody = document.getElementById('emailBody');
+        
+        // Load candidates based on selected position
+        jobPositionSelect.addEventListener('change', function() {
+            const selectedPosition = this.value;
+            
+            if (selectedPosition) {
+                // Filter candidates by position
+                const filteredCandidates = candidates.filter(candidate => candidate.position === selectedPosition);
+                
+                // Clear and populate candidate select
+                candidateSelect.innerHTML = '';
+                filteredCandidates.forEach(candidate => {
+                    const option = document.createElement('option');
+                    option.value = candidate.id;
+                    option.textContent = `${candidate.name} (${candidate.email})`;
+                    candidateSelect.appendChild(option);
+                });
+                
+                // Show candidate selector
+                candidateSelectorContainer.style.display = 'block';
+            } else {
+                candidateSelectorContainer.style.display = 'none';
+            }
+        });
+        
+        // Email template selection
+        emailTemplateSelect.addEventListener('change', function() {
+            const template = this.value;
+            
+            if (template) {
+                // Show candidate selector for all except team notification
+                candidateSelectorContainer.style.display = template === 'team_notification' ? 'none' : 'block';
+                
+                // Show team selector only for team notification
+                teamSelectorContainer.style.display = template === 'team_notification' ? 'block' : 'none';
+                
+                // Load template content if not custom
+                if (template !== 'custom' && emailTemplates[template]) {
+                    emailSubject.value = emailTemplates[template].subject;
+                    emailBody.value = emailTemplates[template].body;
+                } else {
+                    // Clear for custom template
+                    emailSubject.value = '';
+                    emailBody.value = '';
+                }
+            } else {
+                // Hide selectors and clear content
+                candidateSelectorContainer.style.display = 'none';
+                teamSelectorContainer.style.display = 'none';
+                emailSubject.value = '';
+                emailBody.value = '';
+            }
+        });
+        
+        // Schedule email checkbox handler
+        document.getElementById('scheduleEmailCheck').addEventListener('change', function() {
+            document.getElementById('scheduleContainer').style.display = this.checked ? 'block' : 'none';
+        });
+        
+        // Variable buttons handler
+        document.querySelectorAll('.variable-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const variable = this.dataset.variable;
+                const textarea = document.getElementById('emailBody');
+                
+                // Insert variable at cursor position
+                const cursorPos = textarea.selectionStart;
+                const textBefore = textarea.value.substring(0, cursorPos);
+                const textAfter = textarea.value.substring(cursorPos);
+                
+                textarea.value = textBefore + variable + textAfter;
+                textarea.focus();
+                
+                // Place cursor after inserted variable
+                textarea.selectionStart = cursorPos + variable.length;
+                textarea.selectionEnd = cursorPos + variable.length;
+            });
+        });
+        
+        // Preview button handler
+        document.getElementById('previewEmailBtn').addEventListener('click', function() {
+            const previewContent = document.getElementById('previewContent');
+            const emailContent = document.getElementById('emailBody').value;
+            const subject = document.getElementById('emailSubject').value;
+            
+            // Simple preview with basic variables replaced
+            let previewHTML = `<strong>Subject:</strong> ${subject}<hr>`;
+            let previewBody = emailContent
+                .replace(/{{candidate_name}}/g, 'John Doe')
+                .replace(/{{job_title}}/g, 'Software Engineer')
+                .replace(/{{company_name}}/g, 'Tech Company Inc.')
+                .replace(/{{interview_date}}/g, 'March 25, 2025, 10:00 AM')
+                .replace(/{{hiring_manager}}/g, 'Jane Smith');
+            
+            // Replace newlines with <br> for HTML display
+            previewBody = previewBody.replace(/\n/g, '<br>');
+            
+            previewHTML += previewBody;
+            
+            // Add signature if checked
+            if (document.getElementById('includeSignatureCheck').checked) {
+                const senderName = document.getElementById('senderName').value;
+                previewHTML += `<br><br>--<br>${senderName}<br>Recruitment Team<br>Tech Company Inc.`;
+            }
+            
+            previewContent.innerHTML = previewHTML;
+            document.getElementById('emailPreview').style.display = 'block';
+        });
+        
+        // Generate email with AI button
+        document.getElementById('generateEmailBtn').addEventListener('click', function() {
+            const template = document.getElementById('emailTemplateSelect').value;
+            const jobPosition = document.getElementById('jobPositionSelect').value;
+            
+            if (!template || !jobPosition) {
+                alert('Please select an email template and job position first.');
+                return;
+            }
+            
+            // Show loading state
+            this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Generating...';
+            this.disabled = true;
+            
+            // Simulate API call to Llama 3.x for generating email content
+            setTimeout(() => {
+                // For demo purposes, just use the predefined templates
+                if (template !== 'custom' && emailTemplates[template]) {
+                    const jobTitleMapping = {
+                        'software_engineer': 'Software Engineer',
+                        'data_scientist': 'Data Scientist',
+                        'product_manager': 'Product Manager',
+                        'ux_designer': 'UX Designer',
+                        'marketing_specialist': 'Marketing Specialist'
+                    };
+                    
+                    const jobTitle = jobTitleMapping[jobPosition] || jobPosition;
+                    
+                    // Replace job title in template
+                    emailSubject.value = emailTemplates[template].subject.replace(/{{job_title}}/g, jobTitle);
+                    emailBody.value = emailTemplates[template].body.replace(/{{job_title}}/g, jobTitle);
+                }
+                
+                // Reset button
+                this.innerHTML = 'Generate with AI';
+                this.disabled = false;
+            }, 1500);
+        });
+        
+        // Send email button handler
+        document.getElementById('sendEmailBtn').addEventListener('click', function() {
+            const subject = document.getElementById('emailSubject').value;
+            const body = document.getElementById('emailBody').value;
+            
+            if (!subject || !body) {
+                alert('Please enter an email subject and body.');
+                return;
+            }
+            
+            // Show loading state
+            this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...';
+            this.disabled = true;
+            
+            // Simulate sending email
+            setTimeout(() => {
+                // Show success modal
+                const recipientCount = document.getElementById('candidateSelect').selectedOptions.length || 1;
+                document.getElementById('recipientCount').textContent = recipientCount;
+                
+                const emailSentModal = new bootstrap.Modal(document.getElementById('emailSentModal'));
+                emailSentModal.show();
+                
+                // Reset button
+                this.innerHTML = 'Send Email';
+                this.disabled = false;
+                
+                // Add to email history
+                const today = new Date().toISOString().split('T')[0];
+                const template = document.getElementById('emailTemplateSelect').value;
+                const templateName = template.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${today}</td>
+                    <td>${templateName}</td>
+                    <td>Selected Candidates</td>
+                    <td>${subject}</td>
+                    <td><span class="badge bg-success">Delivered</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-secondary">Resend</button>
+                    </td>
+                `;
+                document.getElementById('emailHistoryList').prepend(row);
+            }, 2000);
+        });
+        
+        // Send Another button in modal
+        document.getElementById('sendAnotherBtn').addEventListener('click', function() {
+            // Close modal
+            bootstrap.Modal.getInstance(document.getElementById('emailSentModal')).hide();
+            
+            // Reset form
+            document.getElementById('emailSubject').value = '';
+            document.getElementById('emailBody').value = '';
+            document.getElementById('emailPreview').style.display = 'none';
+        });
+    });
+</script>
+{% endblock %}
