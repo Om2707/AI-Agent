@@ -14,3 +14,208 @@
 2025-03-23 14:15:03,957 - __main__ - INFO - Make sure you've installed all dependencies from requirements.txt
 2025-03-23 14:21:06,307 - __main__ - ERROR - Failed to import necessary modules: cannot import name 'send_email' from 'utils.email_sender' (C:\Users\tagal\Desktop\AI Agent\utils\email_sender.py)
 2025-03-23 14:21:06,308 - __main__ - INFO - Make sure you've installed all dependencies from requirements.txt
+2025-03-24 10:20:41,585 - __main__ - INFO - Checked directory: data/job_descriptions
+2025-03-24 10:20:41,586 - __main__ - INFO - Checked directory: data/resumes
+2025-03-24 10:20:41,586 - __main__ - WARNING - Model directory not found at models/llama-model. Please configure LLAMA_MODEL_PATH.
+2025-03-24 10:20:41,613 - __main__ - INFO - Configuration loaded successfully
+2025-03-24 10:20:41,614 - __main__ - ERROR - Failed to initialize Llama model: LlamaModel.__init__() missing 1 required positional argument: 'model_path'
+2025-03-24 10:20:41,614 - __main__ - ERROR - Failed to initialize Llama model. Exiting.
+2025-03-24 11:13:09,454 - __main__ - INFO - Checked directory: data/job_descriptions
+2025-03-24 11:13:09,455 - __main__ - INFO - Checked directory: data/resumes
+2025-03-24 11:13:09,455 - __main__ - WARNING - Model directory not found at models/llama-model. Please configure LLAMA_MODEL_PATH.
+2025-03-24 11:13:09,459 - __main__ - INFO - Configuration loaded successfully
+2025-03-24 11:13:09,459 - __main__ - ERROR - Failed to initialize Llama model: LlamaModel.__init__() missing 1 required positional argument: 'model_path'
+2025-03-24 11:13:09,460 - __main__ - ERROR - Failed to initialize Llama model. Exiting.
+2025-03-24 11:13:53,514 - __main__ - INFO - Checked directory: data/job_descriptions
+2025-03-24 11:13:53,515 - __main__ - INFO - Checked directory: data/resumes
+2025-03-24 11:13:53,515 - __main__ - WARNING - Model directory not found at models/llama-model. Please configure LLAMA_MODEL_PATH.
+2025-03-24 11:13:53,519 - __main__ - INFO - Configuration loaded successfully
+2025-03-24 11:13:53,519 - __main__ - ERROR - Failed to initialize Llama model: LlamaModel.__init__() missing 1 required positional argument: 'model_path'
+2025-03-24 11:13:53,519 - __main__ - ERROR - Failed to initialize Llama model. Exiting.
+2025-03-24 11:26:44,727 - __main__ - INFO - Checked directory: data/job_descriptions
+2025-03-24 11:26:44,727 - __main__ - INFO - Checked directory: data/resumes
+2025-03-24 11:26:44,728 - __main__ - WARNING - Model directory not found at models/llama-model. Please configure LLAMA_MODEL_PATH.
+2025-03-24 11:26:44,731 - __main__ - INFO - Configuration loaded successfully
+2025-03-24 11:26:44,734 - __main__ - ERROR - Failed to initialize Llama model: Model path does not exist: models/llama-model
+2025-03-24 11:26:44,734 - __main__ - ERROR - Failed to initialize Llama model. Exiting.
+2025-03-24 11:27:35,253 - __main__ - INFO - Checked directory: data/job_descriptions
+2025-03-24 11:27:35,253 - __main__ - INFO - Checked directory: data/resumes
+2025-03-24 11:27:35,253 - __main__ - WARNING - Model directory not found at models/llama-model. Please configure LLAMA_MODEL_PATH.
+2025-03-24 11:27:35,257 - __main__ - INFO - Configuration loaded successfully
+2025-03-24 11:27:35,260 - __main__ - ERROR - Failed to initialize Llama model: Model path does not exist: models/llama-model
+2025-03-24 11:27:35,261 - __main__ - ERROR - Failed to initialize Llama model. Exiting.
+2025-03-24 11:54:38,880 - __main__ - INFO - Checked directory: data/job_descriptions
+2025-03-24 11:54:38,881 - __main__ - INFO - Checked directory: data/resumes
+2025-03-24 11:54:38,881 - __main__ - WARNING - Model directory not found at models/llama-model. Please configure LLAMA_MODEL_PATH.
+2025-03-24 11:54:38,886 - __main__ - INFO - Configuration loaded successfully
+2025-03-24 11:54:38,886 - __main__ - INFO - Initializing Llama model from path: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 11:54:38,886 - models.llama_model - INFO - Loading Llama model from: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 11:54:39,197 - models.llama_model - INFO - Llama model loaded successfully
+2025-03-24 11:54:39,198 - models.llama_model - INFO - Testing model with prompt: 'What is the capital of France?'
+2025-03-24 11:54:43,195 - models.llama_model - INFO - Model test completed successfully
+2025-03-24 11:54:43,196 - __main__ - INFO - Model test response: 
+
+A) London
+B) Paris
+C) Berlin
+D) Rome
+
+Answer: B) Paris
+2025-03-24 11:54:43,196 - __main__ - INFO - Llama model initialized and tested successfully
+2025-03-24 11:55:09,924 - __main__ - INFO - Checked directory: data/job_descriptions
+2025-03-24 11:55:09,925 - __main__ - INFO - Checked directory: data/resumes
+2025-03-24 11:55:09,925 - __main__ - WARNING - Model directory not found at models/llama-model. Please configure LLAMA_MODEL_PATH.
+2025-03-24 11:55:09,929 - __main__ - INFO - Configuration loaded successfully
+2025-03-24 11:55:09,929 - __main__ - INFO - Initializing Llama model from path: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 11:55:09,930 - models.llama_model - INFO - Loading Llama model from: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 11:55:10,239 - models.llama_model - INFO - Llama model loaded successfully
+2025-03-24 11:55:10,240 - models.llama_model - INFO - Testing model with prompt: 'What is the capital of France?'
+2025-03-24 11:55:15,269 - models.llama_model - INFO - Model test completed successfully
+2025-03-24 11:55:15,270 - __main__ - INFO - Model test response: 
+
+What is the currency of France?
+
+What are some famous places to visit in France?
+
+Which language is primarily spoken in France?
+2025-03-24 11:55:15,270 - __main__ - INFO - Llama model initialized and tested successfully
+2025-03-24 11:55:43,909 - __main__ - INFO - Checked directory: data/job_descriptions
+2025-03-24 11:55:43,909 - __main__ - INFO - Checked directory: data/resumes
+2025-03-24 11:55:43,910 - __main__ - WARNING - Model directory not found at models/llama-model. Please configure LLAMA_MODEL_PATH.
+2025-03-24 11:55:43,914 - __main__ - INFO - Configuration loaded successfully
+2025-03-24 11:55:43,914 - __main__ - INFO - Initializing Llama model from path: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 11:55:43,914 - models.llama_model - INFO - Loading Llama model from: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 11:55:44,230 - models.llama_model - INFO - Llama model loaded successfully
+2025-03-24 11:55:44,230 - models.llama_model - INFO - Testing model with prompt: 'What is the capital of France?'
+2025-03-24 11:55:44,963 - models.llama_model - INFO - Model test completed successfully
+2025-03-24 11:55:44,963 - __main__ - INFO - Model test response: 
+
+2025-03-24 11:55:44,964 - __main__ - INFO - Llama model initialized and tested successfully
+2025-03-24 11:56:41,316 - __main__ - INFO - Checked directory: data/job_descriptions
+2025-03-24 11:56:41,317 - __main__ - INFO - Checked directory: data/resumes
+2025-03-24 11:56:41,317 - __main__ - WARNING - Model directory not found at models/llama-model. Please configure LLAMA_MODEL_PATH.
+2025-03-24 11:56:41,321 - __main__ - INFO - Configuration loaded successfully
+2025-03-24 11:56:41,321 - __main__ - INFO - Initializing Llama model from path: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 11:56:41,322 - models.llama_model - INFO - Loading Llama model from: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 11:56:41,630 - models.llama_model - INFO - Llama model loaded successfully
+2025-03-24 11:56:41,631 - models.llama_model - INFO - Testing model with prompt: 'What is the capital of France?'
+2025-03-24 11:56:43,709 - models.llama_model - INFO - Model test completed successfully
+2025-03-24 11:56:43,709 - __main__ - INFO - Model test response: 
+
+Answer: The capital of France is Paris.
+2025-03-24 11:56:43,709 - __main__ - INFO - Llama model initialized and tested successfully
+2025-03-24 11:58:37,475 - __main__ - INFO - Checked directory: data/job_descriptions
+2025-03-24 11:58:37,475 - __main__ - INFO - Checked directory: data/resumes
+2025-03-24 11:58:37,476 - __main__ - WARNING - Model directory not found at models/llama-model. Please configure LLAMA_MODEL_PATH.
+2025-03-24 11:58:37,480 - __main__ - INFO - Configuration loaded successfully
+2025-03-24 11:58:37,480 - __main__ - INFO - Initializing Llama model from path: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 11:58:37,480 - models.llama_model - INFO - Loading Llama model from: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 11:58:37,793 - models.llama_model - INFO - Llama model loaded successfully
+2025-03-24 11:58:37,794 - models.llama_model - INFO - Testing model with prompt: 'What is the capital of France?'
+2025-03-24 11:59:04,181 - __main__ - INFO - Checked directory: data/job_descriptions
+2025-03-24 11:59:04,181 - __main__ - INFO - Checked directory: data/resumes
+2025-03-24 11:59:04,181 - __main__ - WARNING - Model directory not found at models/llama-model. Please configure LLAMA_MODEL_PATH.
+2025-03-24 11:59:04,185 - __main__ - INFO - Configuration loaded successfully
+2025-03-24 11:59:04,186 - __main__ - INFO - Initializing Llama model from path: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 11:59:04,186 - models.llama_model - INFO - Loading Llama model from: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 11:59:04,502 - models.llama_model - INFO - Llama model loaded successfully
+2025-03-24 11:59:04,502 - models.llama_model - INFO - Testing model with prompt: 'What is the capital of France?'
+2025-03-24 11:59:11,051 - models.llama_model - INFO - Model test completed successfully
+2025-03-24 11:59:11,052 - __main__ - INFO - Model test response: 
+What are the three main branches of government in France?
+Who is the President of France?
+What is the name of the national anthem of France?
+What is the currency used in France?
+2025-03-24 11:59:11,052 - __main__ - INFO - Llama model initialized and tested successfully
+2025-03-24 12:03:01,953 - __main__ - ERROR - Error in JD Generator: [WinError 233] No process is on the other end of the pipe
+2025-03-24 12:03:38,329 - __main__ - INFO - Checked directory: data/job_descriptions
+2025-03-24 12:03:38,329 - __main__ - INFO - Checked directory: data/resumes
+2025-03-24 12:03:38,330 - __main__ - WARNING - Model directory not found at models/llama-model. Please configure LLAMA_MODEL_PATH.
+2025-03-24 12:03:38,333 - __main__ - INFO - Configuration loaded successfully
+2025-03-24 12:03:38,334 - __main__ - INFO - Initializing Llama model from path: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 12:03:38,334 - models.llama_model - INFO - Loading Llama model from: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 12:03:38,644 - models.llama_model - INFO - Llama model loaded successfully
+2025-03-24 12:03:38,644 - models.llama_model - INFO - Testing model with prompt: 'What is the capital of France?'
+2025-03-24 12:03:43,633 - __main__ - INFO - Checked directory: data/job_descriptions
+2025-03-24 12:03:43,634 - __main__ - INFO - Checked directory: data/resumes
+2025-03-24 12:03:43,634 - __main__ - WARNING - Model directory not found at models/llama-model. Please configure LLAMA_MODEL_PATH.
+2025-03-24 12:03:43,639 - __main__ - INFO - Configuration loaded successfully
+2025-03-24 12:03:43,639 - __main__ - INFO - Initializing Llama model from path: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 12:03:43,640 - models.llama_model - INFO - Loading Llama model from: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 12:03:43,961 - models.llama_model - INFO - Llama model loaded successfully
+2025-03-24 12:03:43,962 - models.llama_model - INFO - Testing model with prompt: 'What is the capital of France?'
+2025-03-24 12:03:51,357 - models.llama_model - INFO - Model test completed successfully
+2025-03-24 12:03:51,357 - __main__ - INFO - Model test response: 
+
+A. Berlin
+B. Paris
+C. London
+D. Rome
+
+Answer: B. Paris
+
+Explanation: The capital of France is Paris, which is located in the northern central part of the country.
+2025-03-24 12:03:51,358 - __main__ - INFO - Llama model initialized and tested successfully
+2025-03-24 12:05:52,162 - __main__ - INFO - Checked directory: data/job_descriptions
+2025-03-24 12:05:52,162 - __main__ - INFO - Checked directory: data/resumes
+2025-03-24 12:05:52,162 - __main__ - WARNING - Model directory not found at models/llama-model. Please configure LLAMA_MODEL_PATH.
+2025-03-24 12:05:52,166 - __main__ - INFO - Configuration loaded successfully
+2025-03-24 12:05:52,166 - __main__ - INFO - Initializing Llama model from path: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 12:05:52,167 - models.llama_model - INFO - Loading Llama model from: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 12:05:52,474 - models.llama_model - INFO - Llama model loaded successfully
+2025-03-24 12:05:52,475 - models.llama_model - INFO - Testing model with prompt: 'What is the capital of France?'
+2025-03-24 12:05:56,912 - models.llama_model - INFO - Model test completed successfully
+2025-03-24 12:05:56,912 - __main__ - INFO - Model test response: 
+What is the currency of France?
+What are some popular places to visit in France?
+What is the official language of France?
+2025-03-24 12:05:56,913 - __main__ - INFO - Llama model initialized and tested successfully
+2025-03-24 12:09:59,037 - __main__ - INFO - Checked directory: data/job_descriptions
+2025-03-24 12:09:59,037 - __main__ - INFO - Checked directory: data/resumes
+2025-03-24 12:09:59,038 - __main__ - WARNING - Model directory not found at models/llama-model. Please configure LLAMA_MODEL_PATH.
+2025-03-24 12:09:59,042 - __main__ - INFO - Configuration loaded successfully
+2025-03-24 12:09:59,042 - __main__ - INFO - Initializing Llama model from path: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 12:09:59,042 - models.llama_model - INFO - Loading Llama model from: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 12:09:59,352 - models.llama_model - INFO - Llama model loaded successfully
+2025-03-24 12:09:59,352 - models.llama_model - INFO - Testing model with prompt: 'What is the capital of France?'
+2025-03-24 12:10:37,695 - models.llama_model - INFO - Model test completed successfully
+2025-03-24 12:10:37,696 - __main__ - INFO - Model test response: 
+Capital of France: Paris
+France is a country located in Western Europe, and its capital city is Paris. Paris is the largest city in France and is known for its iconic landmarks such as the Eiffel Tower, Notre-Dame Cathedral, and the Louvre Museum. The city has a rich cultural heritage and is home to many famous art museums, fashion houses, and historical buildings.
+Paris is situated on the River Seine and has a population of over 2 million people. It is known for its beautiful architecture, charming streets, and vibrant nightlife. The city is also home to many famous universities and research institutions, including the Sorbonne University and the Paris-Saclay University.
+In addition to being the capital of France, Paris is also a major center for international diplomacy and business. Many global organizations and companies have offices in the city, and it hosts numerous international events and conferences throughout the year.
+Overall, Paris is an incredible destination that offers something for everyone, from its rich history and culture to its modern amenities and attractions. Whether you are interested in art, fashion, food, or simply exploring a new city, Paris is an unforgettable experience.
+2025-03-24 12:10:37,697 - __main__ - INFO - Llama model initialized and tested successfully
+2025-03-24 12:13:45,366 - __main__ - INFO - Checked directory: data/job_descriptions
+2025-03-24 12:13:45,366 - __main__ - INFO - Checked directory: data/resumes
+2025-03-24 12:13:45,367 - __main__ - WARNING - Model directory not found at models/llama-model. Please configure LLAMA_MODEL_PATH.
+2025-03-24 12:13:45,371 - __main__ - INFO - Configuration loaded successfully
+2025-03-24 12:13:45,371 - __main__ - INFO - Initializing Llama model from path: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 12:13:45,372 - models.llama_model - INFO - Loading Llama model from: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 12:13:45,682 - models.llama_model - INFO - Llama model loaded successfully
+2025-03-24 12:13:45,682 - models.llama_model - INFO - Testing model with prompt: 'What is the capital of France?'
+2025-03-24 12:13:53,278 - __main__ - INFO - Checked directory: data/job_descriptions
+2025-03-24 12:13:53,278 - __main__ - INFO - Checked directory: data/resumes
+2025-03-24 12:13:53,279 - __main__ - WARNING - Model directory not found at models/llama-model. Please configure LLAMA_MODEL_PATH.
+2025-03-24 12:13:53,283 - __main__ - INFO - Configuration loaded successfully
+2025-03-24 12:13:53,283 - __main__ - INFO - Initializing Llama model from path: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 12:13:53,283 - models.llama_model - INFO - Loading Llama model from: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 12:13:53,594 - models.llama_model - INFO - Llama model loaded successfully
+2025-03-24 12:13:53,594 - models.llama_model - INFO - Testing model with prompt: 'What is the capital of France?'
+2025-03-24 12:13:54,993 - models.llama_model - INFO - Model test completed successfully
+2025-03-24 12:13:54,993 - __main__ - INFO - Model test response: 
+ The answer is Paris.
+2025-03-24 12:13:54,993 - __main__ - INFO - Llama model initialized and tested successfully
+2025-03-24 12:14:09,892 - __main__ - INFO - Checked directory: data/job_descriptions
+2025-03-24 12:14:09,893 - __main__ - INFO - Checked directory: data/resumes
+2025-03-24 12:14:09,893 - __main__ - WARNING - Model directory not found at models/llama-model. Please configure LLAMA_MODEL_PATH.
+2025-03-24 12:14:09,897 - __main__ - INFO - Configuration loaded successfully
+2025-03-24 12:14:09,898 - __main__ - INFO - Initializing Llama model from path: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 12:14:09,898 - models.llama_model - INFO - Loading Llama model from: models/llama-2-7b-chat.Q4_K_M.gguf
+2025-03-24 12:14:10,212 - models.llama_model - INFO - Llama model loaded successfully
+2025-03-24 12:14:10,213 - models.llama_model - INFO - Testing model with prompt: 'What is the capital of France?'
+2025-03-24 12:14:12,041 - models.llama_model - INFO - Model test completed successfully
+2025-03-24 12:14:12,041 - __main__ - INFO - Model test response: 
+
+The capital of France is Paris.
+2025-03-24 12:14:12,042 - __main__ - INFO - Llama model initialized and tested successfully

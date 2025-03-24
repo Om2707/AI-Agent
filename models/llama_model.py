@@ -1,6 +1,11 @@
 import os
 from typing import Dict, Any, List, Optional
 from llama_cpp import Llama
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 class LlamaModel:
     """Wrapper for Llama 3.x model integration"""
@@ -14,11 +19,28 @@ class LlamaModel:
             context_size: Maximum context size
             n_gpu_layers: Number of layers to offload to GPU (-1 for all)
         """
-        self.model = Llama(
-            model_path=model_path,
-            n_ctx=context_size,
-            n_gpu_layers=n_gpu_layers
-        )
+        try:
+            logger.info(f"Loading Llama model from: {model_path}")
+            self.model = Llama(
+                model_path=model_path,
+                n_ctx=context_size,
+                n_gpu_layers=n_gpu_layers
+            )
+            logger.info("Llama model loaded successfully")
+            self.model_loaded = True
+        except Exception as e:
+            logger.error(f"Failed to load Llama model: {str(e)}")
+            self.model_loaded = False
+            raise
+    
+    def is_loaded(self) -> bool:
+        """
+        Check if the model is loaded successfully
+        
+        Returns:
+            Boolean indicating if model is loaded
+        """
+        return self.model_loaded
     
     def generate(self, prompt: str, max_tokens: int = 512, temperature: float = 0.7, 
                  top_p: float = 0.95, stop: Optional[List[str]] = None) -> str:
@@ -35,6 +57,9 @@ class LlamaModel:
         Returns:
             Generated text
         """
+        if not self.model_loaded:
+            raise RuntimeError("Model not loaded successfully")
+            
         response = self.model.create_completion(
             prompt=prompt,
             max_tokens=max_tokens,
@@ -55,6 +80,9 @@ class LlamaModel:
         Returns:
             Embedding vector
         """
+        if not self.model_loaded:
+            raise RuntimeError("Model not loaded successfully")
+            
         return self.model.embed(text)
     
     def similarity_score(self, text1: str, text2: str) -> float:
@@ -87,3 +115,21 @@ class LlamaModel:
             return 0
             
         return dot_product / (magnitude1 * magnitude2)
+    
+    def test_model(self, test_prompt: str = "What is the capital of France?") -> str:
+        """
+        Test the model with a simple prompt to verify it's working
+        
+        Args:
+            test_prompt: Test prompt to use
+            
+        Returns:
+            Model response
+        """
+        if not self.model_loaded:
+            raise RuntimeError("Model not loaded successfully")
+            
+        logger.info(f"Testing model with prompt: '{test_prompt}'")
+        response = self.generate(test_prompt)
+        logger.info("Model test completed successfully")
+        return response

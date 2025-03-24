@@ -60,13 +60,61 @@ def setup_environment():
 def initialize_llama_model():
     """Initialize and return the Llama model instance."""
     try:
-        model = LlamaModel()
-        logger.info("Llama model initialized successfully")
-        return model
+        # Get model path from environment variable or use default
+        model_path = os.getenv("LLAMA_MODEL_PATH", "models/llama-2-7b-chat.Q4_K_M.gguf")
+        logger.info(f"Initializing Llama model from path: {model_path}")
+        
+        # Initialize the model
+        model = LlamaModel(model_path=model_path)
+        
+        # Test if the model loaded successfully
+        if model.is_loaded():
+            # Run a quick test to verify the model works
+            test_response = model.test_model()
+            logger.info(f"Model test response: {test_response}")
+            logger.info("Llama model initialized and tested successfully")
+            return model
+        else:
+            logger.error("Llama model initialization returned False")
+            return None
     except Exception as e:
         logger.error(f"Failed to initialize Llama model: {str(e)}")
         return None
 
+def main():
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description="HR Agent System")
+    parser.add_argument("action", choices=["list", "run"], help="Action to perform")
+    parser.add_argument("agent", nargs="?", help="Agent to run")
+    args = parser.parse_args()
+    
+    # List available agents
+    if args.action == "list":
+        list_available_agents()
+        return
+    
+    # Run specific agent or all agents
+    if args.action == "run":
+        # Initialize the Llama model
+        model = initialize_llama_model()
+        
+        if model is None or not model.is_loaded():
+            logger.error("Failed to initialize or load the Llama model. Exiting.")
+            return
+            
+        if args.agent == "jd":
+            run_jd_generator(model)
+        elif args.agent == "ranker":
+            run_resume_ranker(model)
+        # Add other agents here...
+        elif args.agent == "all":
+            # Run the complete workflow
+            pass
+        else:
+            print(f"Unknown agent: {args.agent}")
+            list_available_agents()
+
+            
 def list_available_agents():
     """Display a list of available agents in the system."""
     agents = [

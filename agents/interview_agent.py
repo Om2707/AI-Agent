@@ -1,5 +1,6 @@
 from typing import Dict, Any, List, Optional, Tuple
 from models.llama_model import LlamaModel
+import datetime
 
 class InterviewAgent:
     """Agent for conducting interactive AI-driven interviews"""
@@ -261,11 +262,13 @@ Keep it warm and professional.
             Formatted interview transcript
         """
         transcript = f"Interview Transcript\n{'='*20}\n\n"
-        transcript += f"Job Position: {self.context.split('Job Title:')[1].split('\n')[0].strip()}\n"
+        job_title = self.context.split('Job Title:')[1].split('\n')[0].strip()
+        transcript += f"Job Position: {job_title}\n"
+
         transcript += f"Date: {datetime.now().strftime('%Y-%m-%d')}\n\n"
-        
+
         for entry in self.conversation_history:
             role = "Interviewer" if entry["role"] == "interviewer" else "Candidate"
             transcript += f"{role}: {entry['message']}\n\n"
-        
+
         return transcript
