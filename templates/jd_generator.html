@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}JD Generator - Llama Agentic AI Recruitment App{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>Job Description Generator</h2>
+        <p>Create tailored job descriptions based on your requirements.</p>
+        
+        {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+        
+        <div class="card">
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="job_title" class="form-label">Job Title</label>
+                        <input type="text" class="form-control" id="job_title" name="job_title" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="skills" class="form-label">Required Skills (comma separated)</label>
+                        <input type="text" class="form-control" id="skills" name="skills" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="experience" class="form-label">Experience Level</label>
+                        <select class="form-control" id="experience" name="experience" required>
+                            <option value="entry">Entry Level (0-2 years)</option>
+                            <option value="mid">Mid Level (3-5 years)</option>
+                            <option value="senior">Senior Level (6+ years)</option>
+                            <option value="executive">Executive Level</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Generate Job Description</button>
+                </form>
+            </div>
+        </div>
+        
+        {% if generated_jd %}
+        <div class="mt-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Generated Job Description</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <div class="border p-3 bg-light">
+                            <pre>{{ generated_jd }}</pre>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary" onclick="copyToClipboard()">Copy to Clipboard</button>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+function copyToClipboard() {
+    const generatedJd = document.querySelector("pre").textContent;
+    navigator.clipboard.writeText(generatedJd).then(function() {
+        alert("Job Description copied to clipboard!");
+    }, function() {
+        alert("Failed to copy text");
+    });
+}
+</script>
+{% endblock %}

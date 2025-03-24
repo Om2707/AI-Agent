@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Llama Agentic AI Recruitment App{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 text-center mb-4">
+        <h1>Welcome to Llama Agentic AI Recruitment App</h1>
+        <p class="lead">An AI-driven recruitment system using Llama 3.x to automate and enhance key stages of the hiring process.</p>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">About the System</h5>
+                <p class="card-text">This application uses advanced AI to streamline your recruitment process from job description creation to final hiring recommendations.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">JD Generator</h5>
+                <p class="card-text">Generate tailored job descriptions based on hiring requirements.</p>
+                <a href="{{ url_for('jd_generator') }}" class="btn btn-primary">Generate JD</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Resume Ranker</h5>
+                <p class="card-text">Rank resumes based on their relevance to the job description.</p>
+                <a href="{{ url_for('resume_ranker') }}" class="btn btn-primary">Rank Resumes</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Email Automation</h5>
+                <p class="card-text">Automate personalized email communication with candidates.</p>
+                <a href="{{ url_for('email_automation') }}" class="btn btn-primary">Send Emails</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Interview Scheduler</h5>
+                <p class="card-text">Schedule interviews and send calendar invites.</p>
+                <a href="{{ url_for('interview_scheduler') }}" class="btn btn-primary">Schedule Interview</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Interview Agent</h5>
+                <p class="card-text">Conduct interactive AI-driven interviews with candidates.</p>
+                <a href="{{ url_for('interview_agent') }}" class="btn btn-primary">Interview Agent</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Hire Recommendation</h5>
+                <p class="card-text">Get recommendations based on interview transcripts.</p>
+                <a href="{{ url_for('hire_recommendation') }}" class="btn btn-primary">Get Recommendation</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Sentiment Analyzer</h5>
+                <p class="card-text">Analyze sentiment from interview transcripts.</p>
+                <a href="{{ url_for('sentiment_analyzer') }}" class="btn btn-primary">Analyze Sentiment</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
